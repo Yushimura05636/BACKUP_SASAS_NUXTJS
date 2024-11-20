@@ -40,10 +40,10 @@
                             <img src="https://www.clipartmax.com/png/middle/262-2626325_find-and-follow-us-dark-blue-email-icon.png" alt="Email Icon" class="icon" />
                             <span>Email</span>
                         </div>
-                        <div @click="setMethod('phone')" :class="selectedMethod === 'phone' ? 'selected' : ''" class="method-option">
+                        <!-- <div @click="setMethod('phone')" :class="selectedMethod === 'phone' ? 'selected' : ''" class="method-option">
                             <img src="https://cdn-icons-png.flaticon.com/512/6523/6523368.png" alt="Phone Icon" class="icon" />
                             <span>Phone</span>
-                        </div>
+                        </div> -->
                     </div>
                     <button @click="sendVerificationCode" class="send-code-button" :disabled="!selectedMethod">Send Code</button>
                 </div>
