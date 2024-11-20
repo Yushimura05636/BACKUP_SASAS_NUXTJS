@@ -356,11 +356,6 @@ const fetchCustomers = async () => {
             if(state.value.customers.length > 0 || !state.value.customers == null)
             {
                 initializeCustomerData();
-                
-                //foreach
-                state.value.customers.forEach(element => {
-                    element.isSelected = true
-                });
             }
         } catch (error) {
             toast.error(`${error}`, { autoClose: 5000 });
@@ -437,10 +432,6 @@ function initializeCustomerData() {
 async function loadCustomerData(customerId: any, customerObject: any) {
     selectedCheckCustomerId.value = customerId;
     selectedCustomerId.value = customerId;
-    
-    customerObject.isSelected = true
-
-
 
     try {
         state.value.isLoading = true;
@@ -452,6 +443,8 @@ async function loadCustomerData(customerId: any, customerObject: any) {
         customerData[customerId].minAmount = customerLoanCount.min_amount;
         customerData[customerId].maxAmount = customerLoanCount.max_amount;
         customerData[customerId].name = customerObject.personality.family_name + ' ' + customerObject.personality.first_name + ' ' + customerObject.personality.middle_name;
+        customerData[customerId].isSelected = true;
+        customerObject.isSelected = true
 
     } catch (error) {
         toast.error(`Error loading customer data: ${error}`, { autoClose: 5000 });
@@ -540,6 +533,8 @@ const submitForm = async () => {
 
     // Convert customerData object into an array
     const customerDataArray = Object.values(customerData);
+
+    debugger
 
     // Loop through the customer data array using a simple for loop
     for (let i = 0; i < customerDataArray.length; i++) {

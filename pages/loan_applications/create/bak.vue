@@ -579,8 +579,8 @@ function onCheckboxChange(customerId, isChecked): any {
         }
     }
 
-    // Computed property to filter out the current customer from the co-makers list
-    const availableCoMakers = computed(() =>
-    state.value.customers.filter((customer) => customer.id !== selectedCheckCustomerId.value)
-    );
+    // // Computed property to filter out the current customer from the co-makers list
+    // const availableCoMakers = computed(() =>
+    // state.value.customers.filter((customer) => customer.id !== selectedCheckCustomerId.value)
+    // );
 </script>
