@@ -3,67 +3,42 @@
     <div class="p-6 max-w-screen-lg mx-auto bg-white shadow-lg rounded-lg">
     <h1 class="text-3xl font-bold mb-6 text-teal-800">Create Group</h1>
 
-    <form @submit.prevent="submitForm" class="space-y-6">
+    <form @submit.prevent="createGroup" class="space-y-6">
         <div>
-        <label for="groupSelect" class="block text-sm font-medium text-gray-700 mb-2">Select Group</label>
-        <select
-            id="groupSelect"
-            v-model="selectedGroup"
-            @change="loadGroupMembers"
-            class="w-full border-2 border-teal-300 rounded-lg px-4 py-2 focus:outline-none focus:border-teal-500"
-        >
-            <option value="">Select a group</option>
-            <option v-for="group in groups" :key="group.id" :value="group.id">{{ group.name }}</option>
-        </select>
+            <label for="groupSelect" class="block text-sm font-medium text-gray-700 mb-2">Group Name</label>
+            <input v-model="customer_group.description" type="text" class="w-full border rounded-lg px-4 py-2"  />
         </div>
 
-        <div v-if="selectedGroup">
-        <h2 class="text-xl font-semibold mb-3 text-teal-700">Group Members</h2>
-        <div class="overflow-x-auto bg-teal-50 p-4 rounded-lg shadow-md">
-            <table class="min-w-full bg-white border border-teal-200 rounded-lg shadow-lg">
-            <thead class="bg-teal-100 text-teal-700 uppercase text-sm">
-                <tr>
-                <th class="px-6 py-3 text-left">Name</th>
-                <th class="px-6 py-3 text-left">Date Added</th>
-                <th class="px-6 py-3 text-left">Loan Amount</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="member in groupMembers" :key="member.id" class="hover:bg-teal-50 transition duration-150">
-                <td class="px-6 py-4 border-b border-teal-100">{{ member.name }}</td>
-                <td class="px-6 py-4 border-b border-teal-100">{{ member.dateAdded }}</td>
-                <td class="px-6 py-4 border-b border-teal-100">{{ member.loanAmount }}</td>
-                </tr>
-            </tbody>
-            </table>
-        </div>
-        </div>
 
         <div>
-        <label for="collectorSelect" class="block text-sm font-medium text-gray-700 mb-2">Collector's Name</label>
-        <select
-            id="collectorSelect"
-            v-model="selectedCollector"
-            class="w-full border-2 border-teal-300 rounded-lg px-4 py-2 focus:outline-none focus:border-teal-500"
-        >
-            <option value="">Select a collector</option>
-            <option v-for="collector in collectors" :key="collector.id" :value="collector.id">{{ collector.name }}</option>
-        </select>
+            <label for="collectorSelect" class="block text-sm font-medium text-gray-700 mb-2">
+                Collector's Name
+            </label>
+            <select
+                v-model="customer_group.collector_id"
+                id="collectorSelect"
+                class="w-full border-2 border-teal-300 rounded-lg px-4 py-2 focus:outline-none focus:border-teal-500"
+            >
+                <option value="" disabled>Select a collector</option>
+                <!-- Dynamically populate the dropdown -->
+                <option v-for="collector in state.collectors" :key="collector.id" :value="collector.id">
+                {{ collector.first_name }} {{ collector.last_name }}
+                </option>
+            </select>
         </div>
+
+
 
         <div class="flex justify-between">
         <button
             type="button"
-            @click="cancelCreation"
-            class="px-6 py-3 bg-gray-300 text-gray-700 rounded-lg shadow hover:bg-gray-400 transition"
-        >
+            class="px-6 py-3 bg-gray-300 text-gray-700 rounded-lg shadow hover:bg-gray-400 transition">
             Cancel
         </button>
+
         <button
             type="submit"
-            class="px-6 py-3 bg-teal-600 text-white rounded-lg shadow hover:bg-teal-700 transition"
-            :disabled="!isFormValid"
-        >
+            class="px-6 py-3 bg-teal-600 text-white rounded-lg shadow hover:bg-teal-700 transition">
             Create Group
         </button>
         </div>
@@ -73,59 +48,70 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { useRouter } from 'vue-router';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
-const router = useRouter();
+import { ref, onMounted } from 'vue';
+import { apiService } from '~/routes/api/API';
 
-const groups = ref([
-{ id: 1, name: 'Group A' },
-{ id: 2, name: 'Group B' },
-{ id: 3, name: 'Group C' },
-]);
 
-const collectors = ref([
-{ id: 1, name: 'John Doe' },
-{ id: 2, name: 'Jane Smith' },
-{ id: 3, name: 'Alice Johnson' },
-]);
 
-const selectedGroup = ref('');
-const groupMembers = ref([]);
-const selectedCollector = ref('');
+const fetchCollectors = async () => {
+// Replace with your actual API call
+    try {
+        debugger
+        const response = await apiService.getCollector({});
+        state.value.collectors = response;
 
-const isFormValid = computed(() => {
-return selectedGroup.value !== '' && selectedCollector.value !== '';
+        console.log("Collectors",response);
+    } catch (error) {
+        toast.error(error.message, {
+        autoClose: 5000,
+        })
+    }
+};
+
+
+const state = ref({
+collectors: [],
+isTableLoading: false,
 });
 
-function loadGroupMembers() {
-// Simulating an API call to fetch group members
-const mockMembers = [
-    { id: 1, name: 'John Doe', dateAdded: '2023-05-01', loanAmount: 1000 },
-    { id: 2, name: 'Jane Smith', dateAdded: '2023-05-02', loanAmount: 1500 },
-    { id: 3, name: 'Alice Johnson', dateAdded: '2023-05-03', loanAmount: 2000 },
-    { id: 4, name: 'Bob Brown', dateAdded: '2023-05-04', loanAmount: 1800 },
-];
+const customer_group = ref({
+        description: '',
+        collector_id: '',
+        })
 
-groupMembers.value = mockMembers;
-}
+        // create user data
+const createGroup = async () => {
+    try {
+        const jsonObject = {
+            description: customer_group.value.description,
+            collector_id: customer_group.value.collector_id,
+        };
+            const response =  await apiService.createGroup(jsonObject);
 
-function submitForm() {
-if (isFormValid.value) {
-    // Here you would typically send the form data to your backend
-    console.log('Form submitted', {
-    groupId: selectedGroup.value,
-    collectorId: selectedCollector.value,
-    members: groupMembers.value
+        if(response)
+        {
+            toast.success("Customer group created successfully!", {
+            autoClose: 2000,
+            });
+            // Introduce a delay before navigating
+            setTimeout(() => {
+                navigateTo('/customers/group');
+            }, 2000);
+        }
+
+        } catch (error) {
+            toast.error('Error creating Customer group: ' + error);
+            toast.error(`${error}`, {
+    autoClose: 5000,
     });
+        }
+    };
 
-    // Navigate back to the group list or to the newly created group
-    router.push('/customers/Grouplist');
-}
-}
 
-function cancelCreation() {
-// Navigate back to the group list without creating a new group
-router.push('/customers/Grouplist');
-}
+onMounted(async () => {
+    fetchCollectors();
+})
 </script>

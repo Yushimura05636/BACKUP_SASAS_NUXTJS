@@ -184,11 +184,11 @@ console.log('Form submitted', {
     collectorId: selectedCollector.value,
     members: group.value.members,
 });
-router.push('/customers/Grouplist');
+router.push('/customers/group');
 }
 }
 
 function cancelUpdate() {
-router.push('/customers/Grouplist');
+router.push('/customers/group');
 }
 </script>

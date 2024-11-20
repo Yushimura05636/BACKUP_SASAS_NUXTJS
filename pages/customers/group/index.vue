@@ -103,17 +103,17 @@
 
   function viewSelected() {
     if (selectedGroup.value) {
-      router.push(`/customers/Grouplist/view`);
+      router.push(`/customers/group/view`);
     }
   }
 
   function updateSelected() {
     if (selectedGroup.value) {
-      router.push(`/customers/Grouplist/update`);
+      router.push(`/customers/group/update`);
     }
   }
 
   function createGroup() {
-    router.push('/customers/Grouplist/create');
+    router.push('/customers/group/create');
   }
   </script>
