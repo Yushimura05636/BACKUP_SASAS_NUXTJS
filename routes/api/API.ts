@@ -718,6 +718,13 @@ class API extends BaseAPIService {
             return await this.request(`/REGISTER/NoAUTH/FeeActive`, 'GET', params);
         }
 
+        async getCollector(params: object): Promise<any>{
+            return await this.request(`/getCollector`, 'GET', params);
+        }
+        async createGroup(params: object): Promise<any> {
+            return await this.request(`/GROUP_INSERT`, 'POST', params)
+        }
+        
 
         //bar graph data
         async getGraphDataAll(params: object): Promise<any> {
@@ -951,6 +958,7 @@ async authLoanReleaseUpdate(params: object): Promise<any> {
 async authDashBoardEmployeeAuthView(params: object): Promise<any> {
     return await this.request(`/DASHBOARD_EMPLOYEES_AUTH/view`, 'PATCH', params);
 }
+
 }
 
 export const apiService = new API()
