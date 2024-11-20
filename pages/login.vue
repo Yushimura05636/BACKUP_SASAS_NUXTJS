@@ -215,7 +215,10 @@ const verifyCode = async () => {
         if (response.success) {
             localStorage.setItem("_token", response.data?.token)
             successMessage.value = 'Code verified!';
-            router.push('/dashboard/Employee');
+            toast.success(`Code verified!`)
+            setTimeout(() => {
+                router.push('/dashboard/Employee');
+            }, 4000);
         } else {
             toast.error(`Invalid code`, {autoClose: 3000})
         }

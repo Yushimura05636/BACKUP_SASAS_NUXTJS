@@ -516,13 +516,10 @@ async function removeToken() {
 
         if(token){
 
-            //remove laravel authentication toke
-            const response = await authService.logout();
+          // Remove the token from local storage
+          localStorage.removeItem('_token'); // Adjust the key based on your implementation
 
-            // Remove the token from local storage
-            localStorage.removeItem('_token'); // Adjust the key based on your implementation
-
-            //go back to the landing page
+          //go back to the landing page
         }
     } catch (error) {
         toast.error(`${error}`, {
@@ -593,7 +590,7 @@ const team = [
   },
 ];
 
-const placeholderImage = "../img/placeholder-profile.png"; // Placeholder for missing team images
+const placeholderImage = ""; // Placeholder for missing team images
 
 
 onMounted(() => {

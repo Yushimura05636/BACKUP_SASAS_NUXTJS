@@ -96,7 +96,7 @@ const resendMessage = ref('');
 const login = async () => {
     try {
 
-        const error = validateForm({ email: state.email })
+        const error = validateForm({ email: state.email, password: state.password })
 
         if(error.email)
         {

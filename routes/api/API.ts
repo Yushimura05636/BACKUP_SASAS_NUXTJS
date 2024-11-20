@@ -718,6 +718,13 @@ class API extends BaseAPIService {
             return await this.request(`/REGISTER/NoAUTH/FeeActive`, 'GET', params);
         }
 
+        async getCollector(params: object): Promise<any>{
+            return await this.request(`/getCollector`, 'GET', params);
+        }
+        async createGroup(params: object): Promise<any> {
+            return await this.request(`/GROUP_INSERT`, 'POST', params)
+        }
+        
 
         //bar graph data
         async getGraphDataAll(params: object): Promise<any> {
@@ -734,6 +741,17 @@ class API extends BaseAPIService {
         }
         async getDisburse(params: object): Promise<any> {
             return await this.request(`/DISBURSEMENT`, 'GET', params)
+        }
+
+        async getCollectorAndGroupID(params: object): Promise<any> {
+            return await this.request(`/GET_COLLECTORandGROUP_ID`, 'GET', params)
+        }
+
+        async getLoansToCollect(params: object): Promise<any> {
+            return await this.request(`/FETCH_LOANS`, 'POST', params);
+        }
+        async getLoansCollected(params: object): Promise<any> {
+            return await this.request(`/FETCH_COLLECTED_LOANS`, 'POST', params);
         }
 
 
@@ -951,6 +969,7 @@ async authLoanReleaseUpdate(params: object): Promise<any> {
 async authDashBoardEmployeeAuthView(params: object): Promise<any> {
     return await this.request(`/DASHBOARD_EMPLOYEES_AUTH/view`, 'PATCH', params);
 }
+
 }
 
 export const apiService = new API()
