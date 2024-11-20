@@ -276,6 +276,7 @@ const fetchCustomers = async () => {
                     selectedFees: [],
                 };
             });
+            
             const response = await apiService.getCustomerByGroupId({}, selectedGroupId.value);
             state.value.customers = response.data;
 
