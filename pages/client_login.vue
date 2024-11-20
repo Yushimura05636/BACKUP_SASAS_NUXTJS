@@ -1,14 +1,14 @@
 <template>
     <main class="relative flex items-center justify-center min-h-screen animated-background">
         <!-- Overlay -->
-        <div class="absolute inset-0 bg-gradient-to-br from-indigo-800 to-teal-600 opacity-70"></div>
+        <div class="absolute inset-0 bg-teal-600 opacity-70"></div>
 
         <!-- Login Card -->
-        <div class="relative z-10 bg-white p-10 rounded-xl shadow-lg w-full max-w-md border-t-4 border-indigo-500">
+        <div class="relative z-10 bg-white p-10 rounded-xl shadow-lg w-full max-w-md border-t-4">
             <!-- Welcome and Login Form Section -->
             <div v-if="!isAuthenticated" class="text-center space-y-6">
                 <img src="../img/LendCash_Logo-removebg-preview.png" width="100" class="mx-auto animate-bounce mb-4" />
-                <h2 class="text-2xl font-semibold text-gray-800">Welcome Back!</h2>
+                <h2 class="text-gray-800 text-2xl font-bold sm:text-3xl tracking-tight">Welcome Back!</h2>
                 <p class="text-gray-500">Please log in to access your account</p>
 
                 <form @submit.prevent="login" class="space-y-5">
@@ -18,12 +18,14 @@
                     <input v-model="state.password" placeholder="Password" type="password" class="input-field" />
                     <FormError :error="state.error?.password" />
 
-                    <button type="submit" class="submit-button">Sign In</button>
+                    <button class="button bg-teal-600 text-white font-bold py-2 px-4 rounded w-full">
+                        Sign In
+                    </button>
                 </form>
 
                 <!-- Forgot Password Link -->
                 <div class="mt-4">
-                    <a href="/forgot_password" class="text-indigo-500 hover:underline">Forgot your password?</a>
+                    <a href="/forgot_password" class="text-teal-400 font-semibold text-s hover:underline">Forgot your password?</a>
                 </div>
             </div>
 
@@ -245,5 +247,55 @@ const verifyCode = async () => {
 }
 .submit-button:hover {
     background-color: #4f46e5;
+}
+
+.button {
+  position: relative;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  padding-block: 0.5rem;
+  padding-inline: 1.25rem;
+  background-color: #116f6f; /* Tailwind color teal-800 */
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+  gap: 10px;
+  font-weight: bold;
+  border: 3px solid #ffffff4d;
+  outline: none;
+  overflow: hidden;
+  font-size: 15px;
+}
+
+.button:hover {
+  transform: scale(1.05);
+  border-color: #fff9;
+}
+
+.button:hover .icon {
+  transform: translate(8px);
+}
+
+.button:hover::before {
+  animation: shine 1.5s ease-out infinite;
+}
+
+.button::before {
+  content: "";
+  position: absolute;
+  width: 100px;
+  height: 100%;
+  background-image: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 30%,
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0) 70%
+  );
+  top: 0;
+  left: -100px;
+  opacity: 0.6;
 }
 </style>

@@ -3,14 +3,16 @@
   <div class="bg-white">
     <header class="py-8 px-4 md:px-16">
   <div class="container mx-auto flex justify-between items-center scroll-pop">
-    <div class="flex items-center gap-2">
-      <img src="../img/LendCash_Logo-removebg-preview.png" class="w-20" alt="logo">
-      <p class="text-2xl font-bold text-teal-900">LendCash</p>
-    </div>
+    <a href="/" class="block">
+      <div class="flex items-center gap-2">
+        <img src="../img/LendCash_Logo-removebg-preview.png" class="w-20" alt="logo">
+        <p class="text-2xl font-serif text-teal-950">LendCash</p>
+      </div>
+    </a>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <!-- FEATURES -->
-    <nav class="hidden md:flex gap-12">
+    <nav class="hidden md:flex gap-10">
     <div class="relative nav-item">
         <a href="features" class="text-gray-600 hover:text-teal-600 font-bold">Features</a>
 <div class="info-box">
@@ -159,7 +161,7 @@
     <div class="flex flex-col md:flex-row items-center gap-4 pop-in">
       <button
       @click="toggleModal"
-      class="w-full md:w-auto bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-opacity-50 animate__animated animate__pulse animate__infinite flex justify-center items-center whitespace-nowrap"
+      class=" button w-full md:w-auto bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-opacity-50 animate__animated animate__pulse animate__infinite flex justify-center items-center whitespace-nowrap"
         >
       Log in
       </button>
@@ -178,8 +180,8 @@
 <main class="py-16 px-4 md:px-16">
     <div class="container mx-auto flex flex-col md:flex-row gap-16 scroll-pop">
     <div class="md:w-1/2">
-      <h2 class="text-5xl font-bold text-teal-600 mb-4">LendCash Microfinance System for ERD Financial Solution</h2>
-      <p class="text-lg text-gray-600 mb-8">An Online Microfinance Lending System designed to empower individuals and small businesses by providing quick and easy access to financial services.</p>
+      <h2 class="text-5xl font-serif text-teal-600 mb-4">LendCash Microfinance System for ERD Financial Solution</h2>
+      <p class="text-l font-mono text-gray-600 mb-8">An Online Microfinance Lending System designed to empower individuals and small businesses by providing quick and easy access to financial services.</p>
       <a href="customer_register">
         <div class="flex items-center gap-4">
           <button class="button">
@@ -201,9 +203,9 @@
 </div>
 
     <div class="relative bg-cover bg-no-repeat">
-  <div class="container mx-auto mt-20 scroll-pop text-center">
-    <h3 class="text-6xl font-bold text-teal-600 mb-4">LendCash Offers</h3>
-    <p class="text-lg text-gray-600 mb-8">Creating Opportunities, One Microloan at a Time!</p>
+  <div class="container mx-auto mt-16 mb-24 scroll-pop text-center">
+    <h3 class="text-6xl font-serif text-teal-600 mb-6">LendCash Offers</h3>
+    <p class="text-lg text-gray-500 mb-10">Creating Opportunities, One Microloan at a Time!</p>
 
     <div class="flex justify-center pop-in"> <!-- Flexbox added to center the grid -->
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-8">
@@ -255,8 +257,8 @@
     <!-- Additional Content: How It Works Section -->
     <section class="py-16 pop-in">
       <div class="container mx-auto text-center">
-        <h3 class="text-4xl font-bold text-teal-600 mb-6 pop-in">How It Works</h3>
-        <p class="text-lg text-teal-500 mb-10">We make it easy for you to get access to funds when you need them the most. Here’s how you can get started:</p>
+        <h3 class="text-6xl font-serif  text-teal-600 mb-6 pop-in">How It Works</h3>
+        <p class="text-l text-gray-500 mb-10">We make it easy for you to get access to funds when you need them the most.</p>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
           <div class="bg-white rounded-md p-6 shadow-lg pop-in">
       <img src="../img/transaction.png" alt="Register" class="w-16 h-16 mb-4 mx-auto">
@@ -306,7 +308,7 @@
     <!-- Additional Content: Frequently Asked Questions Section -->
     <section class="py-16 pop-in">
       <div class="container mx-auto text-center">
-        <h3 class="text-4xl font-bold text-teal-600 mb-6">Frequently Asked Questions</h3>
+        <h3 class="text-6xl font-serif text-teal-600 mb-6">Frequently Asked Questions</h3>
         <p class="text-lg text-gray-600 mb-10">Got questions? We have the answers. Here are some of the most frequently asked questions:</p>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
           <div class="bg-white rounded-md p-6 shadow-lg animate__animated animate__fadeInUp animate__delay-1s">

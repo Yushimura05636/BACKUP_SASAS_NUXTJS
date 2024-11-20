@@ -1,34 +1,36 @@
 <template>
     <main class="w-full h-screen flex">
         <!-- Left Section with Image -->
-        <div class="w-1/2 hidden lg:flex bg-gradient-to-br from-teal    -600 to-green-600 items-center justify-center">
+        <!-- <div class="w-1/2 hidden lg:flex bg-teal-600 items-center justify-center">
             <img src="../img/2019-04-14.jpg" alt="Building Image" class="w-3/4 h-3/4 object-cover rounded-lg shadow-lg opacity-90 transition duration-300 hover:opacity-100 hover:scale-105" />
-        </div>
+        </div> -->
 
         <!-- Right Section with Form -->
-        <div class="w-full lg:w-1/2 flex flex-col items-center justify-center px-8">
-            <div class="max-w-sm w-full text-gray-600 space-y-8 bg-white p-8 rounded-lg shadow-xl">
+        <div class="w-full flex flex-col items-center bg-teal-600 justify-center px-8">
+            <div class="max-w-sm w-full text-gray-600 space-y-8 bg-white p-8 rounded-xl shadow-xl">
                 <!-- Welcome and Login Form Section -->
-                <div v-if="!isAuthenticated" class="text-center pb-6">
+                <div v-if="!isAuthenticated" class="text-center space-y-6">
                     <img src="../img/LendCash_Logo-removebg-preview.png" width="120" class="mx-auto" />
                     <div class="mt-4">
-                        <h3 class="text-gray-800 text-2xl font-semibold sm:text-3xl tracking-tight">Welcome Back!</h3>
+                        <h3 class="text-gray-800 text-2xl font-bold sm:text-3xl tracking-tight">Welcome Back!</h3>
                         <p class="text-gray-500">Please log in to your account</p>
                     </div>
 
-                    <form @submit.prevent="login" class="space-y-6">
+                    <form @submit.prevent="login" class="space-y-5">
                         <input v-model="state.email" placeholder="Email" type="email" class="input-field" />
                         <FormError :error="state.error?.email" />
 
                         <input v-model="state.password" placeholder="Password" type="password" class="input-field" />
                         <FormError :error="state.error?.password" />
 
-                        <button type="submit" class="submit-button">Sign in</button>
+                        <button class="button bg-teal-600 text-white font-bold py-2 px-4 mx-auto rounded w-full">
+                            Sign In
+                        </button>
                     </form>
 
                     <!-- Forgot Password Link -->
                     <div class="mt-4">
-                        <a href="/forgot_password" class="text-blue-500 hover:underline">Forgot your password?</a>
+                        <a href="/forgot_password" class="text-teal-500 hover:underline">Forgot your password?</a>
                     </div>
                 </div>
 
@@ -208,5 +210,55 @@ const verifyCode = async () => {
 }
 .success {
     color: green;
+}
+
+.button {
+  position: relative;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  padding-block: 0.5rem;
+  padding-inline: 1.25rem;
+  background-color: #116f6f; /* Tailwind color teal-800 */
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+  gap: 10px;
+  font-weight: bold;
+  border: 3px solid #ffffff4d;
+  outline: none;
+  overflow: hidden;
+  font-size: 15px;
+}
+
+.button:hover {
+  transform: scale(1.05);
+  border-color: #fff9;
+}
+
+.button:hover .icon {
+  transform: translate(4px);
+}
+
+.button:hover::before {
+  animation: shine 1.5s ease-out infinite;
+}
+
+.button::before {
+  content: "";
+  position: absolute;
+  width: 100px;
+  height: 100%;
+  background-image: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 30%,
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0) 70%
+  );
+  top: 0;
+  left: -100px;
+  opacity: 0.6;
 }
 </style>
