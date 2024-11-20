@@ -17,6 +17,16 @@
                             </select>
                         </div>
 
+                        <div class="mb-4" v-if="state.customers.length > 0">
+                            <label class="block text-gray-700">Collector Name</label>
+                            <input
+                                v-model="collectorName"
+                                type="text"
+                                class="w-full border border-gray-300 rounded p-2"
+                                readonly
+                            />
+                        </div>
+
                         <!-- Table for Customer Names -->
                         <div v-if="state.customers.length > 0" class="overflow-auto max-h-[250px]"> <!-- Limit height for 10 rows -->
                             <table class="min-w-full bg-white border border-gray-300 mb-4">
@@ -33,7 +43,7 @@
                                                 type="checkbox"
                                                 v-model="customer.isSelected"
                                                 :value="customer.id"
-                                                @change="onCheckboxChange(customer.id, $event.target.checked)"
+                                                @change="onCheckboxChange(customer.id, $event.target.checked, customer)"
                                             />
                                         </td>
                                         <td class="px-4 py-2 border cursor-pointer" @click="loadCustomerData(customer.id, customer)">
@@ -237,6 +247,7 @@ const selectedCustomerId = ref(null);
 const selectedCheckCustomerId = ref(null);
 const selectedLoanCountId = ref(null);
 const customerData = reactive({});
+const collectorName = ref('');
 
 // Computed properties for min and max amounts based on selected loan count
 const maxAmountForSelected = computed(() => {
@@ -310,16 +321,13 @@ const fetchCustomers = async () => {
         try {
             const response = await apiService.getCustomerByGroupIdNoReject({}, selectedGroupId.value);
             state.value.customers = response.data;
+            collectorName.value = response.collector.name
             initializeCustomerData();
         } catch (error) {
             toast.error(`${error}`, { autoClose: 5000 });
         }
         finally {
             state.value.isLoading = false;
-
-            state.value.customers.forEach(element => {
-                element.isSelected = true
-            });
         }
     } else {
         toast.error('Please select a group.', { autoClose: 5000 });
@@ -419,6 +427,7 @@ async function loadCustomerData(customerId: any, customerObject: any) {
             comment: customer.data.loan.comment,
             selectedFees: customer.data.loan.selected_fees || [],
             totalFees: customer.data.loan.total_fees || 0,
+            isSelected: true,
         };
 
     } catch (error) {
@@ -440,14 +449,14 @@ async function fetchCustomerLoanCount(customerId) {
 }
 
 // Loan amount and interest calculations
-const calculateInterestAndAmountPaid = (loanAmount, factorRate) => {
-    if (loanAmount && factorRate) {
-        const interestAmount = loanAmount * (factorRate / 100);
-        const amountPaid = loanAmount + interestAmount;
-        return { interestAmount, amountPaid };
-    }
-    return { interestAmount: 0, amountPaid: 0 };
-};
+// const calculateInterestAndAmountPaid = (loanAmount, factorRate) => {
+//     if (loanAmount && factorRate) {
+//         const interestAmount = loanAmount * (factorRate / 100);
+//         const amountPaid = loanAmount + interestAmount;
+//         return { interestAmount, amountPaid };
+//     }
+//     return { interestAmount: 0, amountPaid: 0 };
+// };
 
 const exceedsMaxAmount = ref('');
 
@@ -501,6 +510,8 @@ const rejectTransaction = async () => {
 
     // Convert customerData object into an array
     const customerDataArray = Object.values(customerData);
+
+    debugger
 
     // Loop through the customer data array using a simple for loop
     for (let i = 0; i < customerDataArray.length; i++) {
@@ -685,9 +696,10 @@ const cancelForm = () => {
     navigateTo('/loan_applications/');
 };
 
-const onCheckboxChange = (customerId, isChecked) => {
+const onCheckboxChange = (customerId, isChecked, customerObject) => {
     if (isChecked) {
         customerData[customerId].isSelected = true;
+        loadCustomerData(customerId, customerObject)
     } else {
         customerData[customerId].isSelected = false;
     }

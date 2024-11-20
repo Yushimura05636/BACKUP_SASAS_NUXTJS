@@ -122,6 +122,20 @@
           <label for="dateResigned" class="block text-gray-700">Date Resigned</label>
           <input v-model="employee.date_resigned" type="date" id="dateResigned" class="w-full border rounded-lg px-4 py-2" />
         </div>
+
+        <div>
+          <label for="employeeRole" class="block text-gray-700">Employee Role</label>
+          <select 
+            v-model="employee.role" 
+            id="employeeRole" 
+            class="w-full border rounded-lg px-4 py-2"
+            @change="handleRoleChange"
+          >
+            <option v-for="role in roles" :key="role.value" :value="role.value">
+              {{ role.label }}
+            </option>
+          </select>
+        </div>
       </div>
 
       <div class="mt-4">
@@ -184,8 +198,20 @@ const employee = ref({
   date_resigned : '',
   personality_id: 0,
   password: '',
+  role: '',
 
 });
+
+const roles = ref([
+  { value: 'employee.collector', label: 'Collector' },
+  { value: 'employee.loan_approval_manager', label: 'Loan Approval Manager' },
+  { value: 'employee.supervisor', label: 'Supervisor' },
+  { value: 'employee.cashier', label: 'Cashier' },
+]);
+
+const handleRoleChange = () => {
+  console.log(`Selected Role: ${employee.value.role}`);
+};
 
 const OptionsService = {
   async fetchGenders() {
@@ -247,6 +273,7 @@ const validationErrorsforEmp = ref({
   tin_no : '',
   date_hired : '',
   password: '',
+  role: '',
 });
 
 
@@ -306,7 +333,6 @@ const createEmployee = async () => {
         toast.error('Password is required.');
         return;
     }
-
     
     const jsonObject = {
       employee: {
@@ -341,7 +367,11 @@ const createEmployee = async () => {
             notes: personality.value.notes, // Get from personality ref, optional
         },
         password: employee.value.password,
+        notes: employee.value.role,
     };
+
+    debugger
+
     await apiService.createEmployee(jsonObject);
     toast.success("Employee updated successfully!", {
           autoClose: 2000,

@@ -5,13 +5,17 @@
         <h1 class="text-3xl font-bold text-teal-800">{{ group.name }}</h1>
     </div>
 
+    <div class="flex items-center space-x-4 mb-6 mt-6">
+        <h1 class="text-3xl font-bold text-teal-800">{{ group.collector_name }}</h1>
+    </div>
+
     <div class="overflow-x-auto bg-teal-50 p-4 rounded-lg shadow-md">
         <table class="min-w-full bg-white border border-teal-200 rounded-lg shadow-lg">
         <thead class="bg-teal-100 text-teal-700 uppercase text-sm">
             <tr>
-            <th class="px-6 py-3 text-left">Member Name</th>
-            <th class="px-6 py-3 text-left">Date Added</th>
-            <th class="px-6 py-3 text-left">Loan Amount</th>
+            <th class="px-6 py-3 text-left">Last Name</th>
+            <th class="px-6 py-3 text-left">First Name</th>
+            <th class="px-6 py-3 text-left">Middle Name</th>
             </tr>
         </thead>
         <tbody>
@@ -22,18 +26,13 @@
             <td colspan="3" class="text-center py-4 text-teal-500">No members in this group</td>
             </tr>
             <tr v-for="member in group.members" :key="member.id" class="hover:bg-teal-50 transition duration-150">
-            <td class="px-6 py-4 border-b border-teal-100">{{ member.name }}</td>
-            <td class="px-6 py-4 border-b border-teal-100">{{ member.dateAdded }}</td>
-            <td class="px-6 py-4 border-b border-teal-100">{{ member.loanAmount }}</td>
+            <td class="px-6 py-4 border-b border-teal-100">{{ member.family_name }}</td>
+            <td class="px-6 py-4 border-b border-teal-100">{{ member.first_name }}</td>
+            <td class="px-6 py-4 border-b border-teal-100">{{ member.middle_name }}</td>
             </tr>
         </tbody>
-        <tfoot>
-            <tr class="bg-teal-100 font-semibold">
-            <td colspan="2" class="px-6 py-3 text-right">Total Loan Amount:</td>
-            <td class="px-6 py-3">{{ totalLoanAmount }}</td>
-            </tr>
-        </tfoot>
         </table>
+        
     </div>
 
     <!-- Back Button with Additional Margin -->
@@ -54,31 +53,48 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { ArrowLeftIcon } from '@heroicons/vue/24/outline';
+import { apiService } from '~/routes/api/API';
 
 const route = useRoute();
 const router = useRouter();
 
-const group = ref({ name: '', members: [] });
+const group = ref({ name: '', members: [], collector_name: '', });
 const isLoading = ref(true);
+const gorupId = ref('');
 
 onMounted(async () => {
-const groupId = route.params.id;
+gorupId.value = route.query.id;
 // Simulate API call
-await new Promise(resolve => setTimeout(resolve, 1000));
-// Mock data for demonstration
-group.value = {
-    name: 'Group A',
-    members: [
-    { id: 1, name: 'Alice Johnson', dateAdded: '2023-05-01', loanAmount: 1000 },
-    { id: 2, name: 'Bob Smith', dateAdded: '2023-05-02', loanAmount: 1500 },
-    // Add more mock data as needed
-    ]
-};
+// await new Promise(resolve => setTimeout(resolve, 1000));
+// // Mock data for demonstration
+// group.value = {
+//     name: 'Group A',
+//     members: [
+//     { id: 1, name: 'Alice Johnson', dateAdded: '2023-05-01', loanAmount: 1000 },
+//     { id: 2, name: 'Bob Smith', dateAdded: '2023-05-02', loanAmount: 1500 },
+//     // Add more mock data as needed
+//     ]
+
+// };
+fetchGroupDetails();
 isLoading.value = false;
 });
 
+async function fetchGroupDetails()
+{
+    try {
+        const response = await apiService.getGroupViewDataById({}, parseInt(gorupId.value));
+        group.value.members = response.data
+        group.value.name = response.group_name
+        group.value.collector_name = response.collector.last_name + ' ' + ' ' + response.collector.first_name + ' ' + response.collector.middle_name
+        debugger
+    } catch (error) {
+        console.error(`${error}`)
+    }
+}
+
 const totalLoanAmount = computed(() => {
-return group.value.members.reduce((total, member) => total + member.loanAmount, 0);
+return group.value.collector_name
 });
 
 // Go back to the previous page

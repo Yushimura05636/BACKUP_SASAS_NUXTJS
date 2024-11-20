@@ -61,7 +61,7 @@ const fetchCollectors = async () => {
     try {
         debugger
         const response = await apiService.getCollector({});
-        state.value.collectors = response;
+        state.value.collectors = response.data;
 
         console.log("Collectors",response);
     } catch (error) {
@@ -85,6 +85,18 @@ const customer_group = ref({
         // create user data
 const createGroup = async () => {
     try {
+
+        if(customer_group.value.description.length <= 0)
+        {
+            toast.error(`The group name should not be empty!`)
+            return   
+        }
+        if(customer_group.value.collector_id.length <= 0)
+        {
+            toast.error(`The collector name should not be empty!`)
+            return   
+        }
+
         const jsonObject = {
             description: customer_group.value.description,
             collector_id: customer_group.value.collector_id,

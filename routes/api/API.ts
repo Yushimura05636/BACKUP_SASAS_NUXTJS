@@ -2,6 +2,16 @@ import BaseAPIService from '~/components/api/BaseAPIService'
 
 class API extends BaseAPIService {
 
+    //customer group
+    async getGroupViewData(params: object): Promise<any>
+    {
+        return await this.request(`/GROUP_RETREIVE/collectors/data`, 'GET', params)
+    }
+
+    async getGroupViewDataById(params: object, id: number): Promise<any>
+    {
+        return await this.request(`/GROUP_RETREIVE/all/${id}`, 'GET', params)
+    }
 
     //profile
     async getUserProfileData(params: object): Promise<any>
@@ -719,7 +729,7 @@ class API extends BaseAPIService {
         }
 
         async getCollector(params: object): Promise<any>{
-            return await this.request(`/getCollector`, 'GET', params);
+            return await this.request(`/COLLECTORS/getCollectors`, 'GET', params);
         }
         async createGroup(params: object): Promise<any> {
             return await this.request(`/GROUP_INSERT`, 'POST', params)

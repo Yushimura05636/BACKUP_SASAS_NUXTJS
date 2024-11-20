@@ -30,6 +30,11 @@ async function getCustomerDetails() {
             loading.value = false
             navigateTo('/dashboard/Employee')
         }
+        else if(user.value == 'COLLECTOR')
+        {
+          loading.value = false
+          navigateTo('/dashboard/COLLECTOR')
+        }
         else
         {
           loading.value = false

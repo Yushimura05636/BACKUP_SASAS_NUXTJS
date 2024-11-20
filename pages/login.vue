@@ -217,7 +217,7 @@ const verifyCode = async () => {
             successMessage.value = 'Code verified!';
             toast.success(`Code verified!`)
             setTimeout(() => {
-                router.push('/dashboard/Employee');
+                router.push('/dashboard/');
             }, 4000);
         } else {
             toast.error(`Invalid code`, {autoClose: 3000})
