@@ -67,6 +67,8 @@
 </template>
 
 <script setup lang="ts">
+import { validateForm } from '~/components/validator/validator';
+
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 
@@ -93,6 +95,21 @@ const resendMessage = ref('');
 
 const login = async () => {
     try {
+
+        const error = validateForm({ email: state.email })
+
+        if(error.email)
+        {
+            toast.error(`${error.email}`)
+            return   
+        }
+
+        if(error.password)
+        {
+            toast.error(`${error.password}`)
+            return   
+        }
+
         const response = await authService.loginClient({ email: state.email, password: state.password });
         console.log('Response:', response); 
         debugger
@@ -119,6 +136,15 @@ const setMethod = (method: string) => {
 
 const sendVerificationCode = async () => {
     try {
+
+        if(selectedMethod.value.length <= 0)
+        {
+            toast.error(`Please select a verification method`)   
+            return
+        }
+
+        
+
         debugger
         const params = {
             email: state.email,
@@ -164,6 +190,14 @@ const resendCode = async () => {
 
 const verifyCode = async () => {
     try {
+
+        if(!state.code || state.code.length < 6)
+        {
+            toast.error(`Invalid 2FA code. Please try again.`)
+            return
+        }
+
+
         debugger
         const params = {
             code: state.code,

@@ -19,13 +19,6 @@
             >
               Modify
             </button>
-            <button
-              @click="deleteUser"
-              class="bg-red-500 text-white py-2 px-4 rounded-md shadow-sm hover:bg-red-600 transition disabled:opacity-50"
-              :disabled="!selectedUserId"
-            >
-              Delete
-            </button>
           </div>
 
           <!-- Search Bar -->

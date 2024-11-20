@@ -18,11 +18,6 @@
             >
               Modify
             </button>
-            <button
-              class="px-5 py-2 bg-red-600 text-white font-medium rounded-full shadow hover:bg-red-500 transition duration-200"
-            >
-              Delete
-            </button>
           </div>
 
           <!-- Search Bar -->

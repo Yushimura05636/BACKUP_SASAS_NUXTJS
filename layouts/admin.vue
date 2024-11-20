@@ -118,7 +118,7 @@
     :class="{'lg:w-100': isChildVisible.home || isChildVisible.about, 'lg:w-50': !isChildVisible.home && !isChildVisible.about}"
     class="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:flex-col overflow-hidden"
   >
-    <div class="flex grow flex-col gap-y-3 bg-gray-900 shadow-lg rounded-r-lg text-gray-200 px-2 pb-4 overflow-hidden">
+    <div class="flex grow flex-col gap-y-3 bg-green-900 shadow-lg rounded-r-lg text-gray-200 px-2 pb-4 overflow-hidden">
       <div class="flex items-center justify-center h-16">
         <button @click="toggleSidebar" class="text-gray-400 hover:text-white focus:outline-none">
           <Bars3Icon class="h-8 w-10" aria-hidden="true" />
@@ -140,8 +140,8 @@
               <div
                 @click="item.subLinks?.length ? toggleChild(item.name) : navigateTo(item.href); toggleHighlight(item.name)"
                 :class="{
-                  'border-l-4 border-indigo-500 bg-gray-800 text-white': highlightedItem === item.name,
-                  'text-gray-400 hover:bg-gray-700 hover:text-white': highlightedItem !== item.name
+                  'border-l-4 border-indigo-500 bg-white-800 text-white': highlightedItem === item.name,
+                  'text-gray-400 hover:bg-white hover:text-white': highlightedItem !== item.name
                 }"
                 class="cursor-pointer group flex items-center p-2 rounded-lg transition duration-200"
               >
@@ -208,12 +208,12 @@
   >
     <div
       v-if="sidebarExpanded"
-      class="fixed inset-0 lg:w-64 lg:bg-gray-900 lg:border lg:border-gray-700 z-50 shadow-lg rounded-lg overflow-x-auto overflow-y-auto"
+      class="fixed inset-0 lg:w-64 lg:bg-green-700 lg:border lg:border-gray-700 z-50 shadow-lg rounded-lg overflow-x-auto overflow-y-auto"
     >
       <!-- Sidebar Header -->
-      <div class="flex h-16 items-center justify-between bg-gray-800 shadow-md px-4 rounded-t-lg">
+      <div class="flex h-16 items-center justify-between bg-green-700 shadow-md px-4 rounded-t-lg">
         <img class="h-12 w-auto" src="../img/LendCash_Logo-removebg-preview.png" :alt="name.company" />
-        <h1 class="text-lg font-bold text-indigo-400">{{ name.company }}</h1>
+        <h1 class="text-lg font-bold text-white">{{ name.company }}</h1>
         <button @click="toggleSidebar" class="text-gray-400 hover:text-white focus:outline-none">
           <XMarkIcon class="h-6 w-6" aria-hidden="true" />
         </button>
@@ -298,12 +298,12 @@
 
 <!-- Header -->
 <div :class="['flex-1', sidebarExpanded ? 'lg:pl-64' : 'lg:pl-16']">
-  <div class="sticky top-0 z-40 flex h-16 items-center justify-between gap-x-4 border-b border-gray-300 bg-white px-4 shadow-sm sm:gap-x-6 lg:px-8 transition-all duration-300">
+  <div class="sticky top-0 z-40 flex h-16 items-center justify-between gap-x-4 border-b border-gray-300 bg-green-700 px-4 shadow-sm sm:gap-x-6 lg:px-8 transition-all duration-300">
     <button type="button" class="-m-2.5 p-2.5 text-gray-700 lg:hidden" @click="sidebarOpen = true">
       <span class="sr-only">Open sidebar</span>
       <Bars3Icon class="h-6 w-6" aria-hidden="true" />
     </button>
-    <h1 class="text-lg font-semibold">{{ formattedPageName }}</h1>
+    <h1 class="text-lg text-white font-semibold">{{ formattedPageName }}</h1>
 
     <!-- User Dropdown -->
     <!-- User Dropdown -->
@@ -313,7 +313,7 @@
     @click="toggleDropdown"
     class="flex items-center text-gray-700 focus:outline-none"
   >
-    <span v-if="state.user && name.value" class="mr-2">{{ name.value }}</span>
+    <span v-if="state.user && name.value" class="mr-5 text-white">{{ name.value }}</span>
     <span v-else class="mr-2">User</span>
     <img
       class="h-8 w-8 rounded-full"
@@ -487,13 +487,6 @@ const menuItems = ref([
       { name: "Collection Report", href: "/reports/collection_report", icon: CurrencyDollarIcon }, 
       { name: "Summary of Balances", href: "/reports/sum_of_balances", icon: CurrencyDollarIcon }, 
       { name: "Ledger of Clients", href: "/reports/ledger_of_clients", icon: CurrencyDollarIcon }, 
-    ],
-  },
-  {
-    name: 'Help',
-    icon: BellAlertIcon,
-    subLinks: [
-      { name: "Help Center", href: "", icon: BellAlertIcon },
     ],
   },
 ]);

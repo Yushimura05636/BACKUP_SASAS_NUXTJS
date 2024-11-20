@@ -45,7 +45,7 @@
                             <span>Phone</span>
                         </div> -->
                     </div>
-                    <button @click="sendVerificationCode" class="send-code-button" :disabled="!selectedMethod">Send Code</button>
+                    <button @click="sendVerificationCode" class="send-code-button">Send Code</button>
                 </div>
 
                 <!-- 2FA Code Input -->
@@ -73,6 +73,8 @@
 </template>
 
 <script setup lang="ts">
+import { validateForm } from "../components/validator/validator";
+
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 
@@ -98,6 +100,19 @@ const resendMessage = ref('');
 
 const login = async () => {
     try {
+        const errors = validateForm({ email: state.email,  password: state.password});
+
+        if(errors.email)
+        {
+            toast.error(`${errors.email}`)   
+            return
+        }
+        if(errors.password)
+        {
+            toast.error(`${errors.password}`) 
+            return
+        }
+
         debugger
         const response = await authService.login({ email: state.email, password: state.password });
         debugger
@@ -129,6 +144,13 @@ const setMethod = (method: string) => {
 
 const sendVerificationCode = async () => {
     try {
+        debugger
+        if(selectedMethod.value.length <= 0)
+        {
+            toast.error(`Please select a verification method`)   
+            return
+        }
+
         debugger
         const params = {
             email: state.email,
@@ -176,6 +198,12 @@ const resendCode = async () => {
 
 const verifyCode = async () => {
     try {
+        if(!state.code || state.code.length < 6)
+        {
+            toast.error(`Invalid 2FA code. Please try again.`)   
+            return
+        }
+
         debugger
         const params = {
             code: state.code,
