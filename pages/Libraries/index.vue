@@ -8,7 +8,7 @@
         <!-- Header Section -->
         <div class="sm:flex sm:items-center">
           <div class="sm:flex-auto">
-            <h1 class="m-6 text-lg font-bold leading-6 text-gray-900 text-center sm:text-left">Libraries</h1>
+            <h1 class="m-6 text-lg font-bold leading-6 text-gray-900 text-center sm:text-left"></h1>
           </div>
         </div>
 
@@ -19,7 +19,7 @@
             <button
               type="button"
               @click="createLibrary"
-              class="rounded bg-black px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 transition"
+              class="rounded button px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 transition"
             >
               Create
             </button>
@@ -27,7 +27,7 @@
               type="button"
               @click="updateLibrary"
               :disabled="!selectedLibraryId"
-              class="rounded bg-black px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 disabled:opacity-50 transition"
+              class="rounded button px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 disabled:opacity-50 transition"
             >
               Update
             </button>
@@ -65,36 +65,56 @@
           <Alert type="danger" :text="state.error?.message" v-if="state.error" />
 
           <!-- Responsive Table -->
-          <div class="overflow-x-auto">
-            <div class="min-w-full max-h-96 overflow-y-auto">
-              <Table
-                class="w-full"
-                :columnHeaders="state.columnHeaders"
-                :data="state.filteredLibraries"
-                :isLoading="state.isTableLoading"
-                :sortData="state.sortData"
-                @sort="sort"
-              >
-                <template #body>
-                  <tr v-for="(lib, index) in state.filteredLibraries" :key="index">
-                    <td class="py-2 px-4 border-b border-gray-300 text-center">
-                      <input
-                        type="radio"
-                        :value="lib.id"
-                        v-model="selectedLibraryId"
-                        class="cursor-pointer"
-                      />
-                    </td>
-                    <td class="py-2 px-4 border-b border-gray-300 text-center space-x-10">
-  <span>{{ lib.description }}</span>
-  <span v-if="state.modeltype == 'customer_group'">{{ lib.last_name }} {{ lib.first_name }} {{ lib.middle_name }}</span>
-</td>
-
-                  </tr>
-                </template>
-              </Table>
-            </div>
-          </div>
+              <div class="overflow-x-auto">
+                <div class="min-w-full max-h-96 overflow-y-auto">
+                  <Table
+                    class="w-full"
+                    :columnHeaders="state.columnHeaders"
+                    :data="state.filteredLibraries"
+                    :isLoading="state.isTableLoading"
+                    :sortData="state.sortData"
+                    @sort="sort"
+                  >
+                    <template #body>
+                      <tr v-for="(lib, index) in state.filteredLibraries" :key="index" class="hover:bg-gray-50">
+                        <!-- Radio Button Column -->
+                        <td 
+                          class="py-4 px-6 border-b border-gray-300 text-center" 
+                          style="width: 20%;"
+                        >
+                          <input
+                            type="radio"
+                            :value="lib.id"
+                            v-model="selectedLibraryId"
+                            class="cursor-pointer"
+                          />
+                        </td>
+                        
+                        <!-- Description Column -->
+                        <td 
+                          class="py-4 px-6 border-b border-gray-300 text-left"
+                          style="width: 50%;"
+                        >
+                          <span class="block font-medium">{{ lib.description }}</span>
+                        </td>
+                        
+                        <!-- Collector Column -->
+                        <td 
+                          class="py-4 px-6 border-b border-gray-300 text-left"
+                          style="width: 30%;"
+                        >
+                          <span 
+                            v-if="state.modeltype === 'customer_group'" 
+                            class="block text-gray-500"
+                          >
+                            {{ lib.last_name }} {{ lib.first_name }} {{ lib.middle_name }}
+                          </span>
+                        </td>
+                      </tr>
+                    </template>
+                  </Table>
+                </div>
+              </div>
 
           <!-- Pagination -->
           <Pagination :data="state.datas" @previous="previous" @next="next" />
@@ -253,3 +273,60 @@ function filterLibraries() {
   );
 }
 </script>
+
+<style>
+.button {
+  position: relative;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  padding-block: 0.5rem;
+  padding-inline: 1.25rem;
+  background-color: #116f6f; /* Tailwind color teal-800 */
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+  gap: 10px;
+  font-weight: bold;
+  border: 3px solid #ffffff4d;
+  outline: none;
+  overflow: hidden;
+  font-size: 15px;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  transition: all 0.3s ease-in-out;
+}
+
+.button:hover {
+  transform: scale(1.05);
+  border-color: #fff9;
+}
+
+.button:hover .icon {
+  transform: translate(4px);
+}
+
+.button:hover::before {
+  animation: shine 1.5s ease-out infinite;
+}
+
+.button::before {
+  content: "";
+  position: absolute;
+  width: 100px;
+  height: 100%;
+  background-image: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 30%,
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0) 70%
+  );
+  top: 0;
+  left: -100px;
+  opacity: 0.6;
+}</style>

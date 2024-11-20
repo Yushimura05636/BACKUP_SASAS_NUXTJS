@@ -1,27 +1,26 @@
 <template>
     <NuxtLayout name="admin">
       <div class="p-6">
-        <div><h1>Users</h1></div>
         <!-- Buttons and Search -->
         <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 space-y-4 sm:space-y-0">
           <!-- Action Buttons -->
           <div class="flex space-x-4 justify-center sm:justify-start">
             <button
               @click="createUser"
-              class="bg-green-500 text-white py-2 px-4 rounded-md shadow-sm hover:bg-green-600 transition"
+              class="button text-white py-2 px-4 rounded-md shadow-sm hover:bg-green-600 transition"
             >
               Create
             </button>
             <button
               @click="updateUser"
-              class="bg-blue-500 text-white py-2 px-4 rounded-md shadow-sm hover:bg-blue-600 transition disabled:opacity-50"
+              class="button text-white py-2 px-4 rounded-md shadow-sm hover:bg-blue-600 transition disabled:opacity-50"
               :disabled="!selectedUserId"
             >
               Modify
             </button>
             <button
               @click="deleteUser"
-              class="bg-red-500 text-white py-2 px-4 rounded-md shadow-sm hover:bg-red-600 transition disabled:opacity-50"
+              class="button text-white py-2 px-4 rounded-md shadow-sm hover:bg-red-600 transition disabled:opacity-50"
               :disabled="!selectedUserId"
             >
               Delete
@@ -29,14 +28,14 @@
           </div>
 
           <!-- Search Bar -->
-          <div class="flex justify-center sm:justify-end w-full sm:w-auto">
+          <div class="flex justify-center sm:justify-end w-10 sm:w-auto">
             <input
               v-model="state.searchQuery"
               type="text"
               placeholder="Search users"
               class="p-2 border border-gray-300 rounded-l-md focus:outline-none w-full sm:w-auto"
             />
-            <button class="bg-blue-500 text-white py-2 px-4 rounded-r-md">Search</button>
+            <button class="button text-white py-2 px-4 rounded-r-md">Search</button>
           </div>
         </div>
 
@@ -194,3 +193,62 @@
     fetchUsers();
   });
   </script>
+
+  <style>
+  .button {
+    position: relative;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+    padding-block: 0.5rem;
+    padding-inline: 1.25rem;
+    background-color: #116f6f; /* Tailwind color teal-800 */
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #fff;
+    gap: 10px;
+    font-weight: bold;
+    border: 3px solid #ffffff4d;
+    outline: none;
+    overflow: hidden;
+    font-size: 15px;
+  }
+  
+  .icon {
+    width: 24px;
+    height: 24px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .button:hover {
+    transform: scale(1.05);
+    border-color: #fff9;
+  }
+  
+  .button:hover .icon {
+    transform: translate(4px);
+  }
+  
+  .button:hover::before {
+    animation: shine 1.5s ease-out infinite;
+  }
+  
+  .button::before {
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 100%;
+    background-image: linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0) 30%,
+      rgba(255, 255, 255, 0.8),
+      rgba(255, 255, 255, 0) 70%
+    );
+    top: 0;
+    left: -100px;
+    opacity: 0.6;
+    
+  }
+</style>
