@@ -31,7 +31,7 @@
   
         <!-- Susceptible for Reloan Section -->
         <div class="bg-white p-6 rounded-xl shadow-md mb-10">
-          <h2 class="text-xl font-semibold text-gray-700 mb-4">Susceptible for Reloan</h2>
+          <h2 class="text-xl font-semibold text-gray-700 mb-4">Eligible to Reloan</h2>
           <p :class="statusClasses(susceptibleForReloan)" class="text-lg font-semibold">
             {{ susceptibleForReloan === 'Yes' ? 'Yes' : susceptibleForReloan === 'No' ? 'No' : 'N/A' }}
           </p>

@@ -50,12 +50,23 @@
 
                 <!-- 2FA Code Input -->
                 <div v-if="isCodeSent" class="text-center space-y-4">
+                    <div class="flex justify-center items-center">
+                        <span v-if="selectedMethod == 'email'">
+                            <img src="https://www.clipartmax.com/png/middle/262-2626325_find-and-follow-us-dark-blue-email-icon.png" alt="Email Icon" class="icon" />
+                        </span>
+                        <span v-else>
+                            <img src="https://cdn-icons-png.flaticon.com/512/6523/6523368.png" alt="Phone Icon" class="icon" />
+                        </span>
+                    </div>
                     <h3 class="text-xl font-semibold">Enter Your 2FA Code</h3>
                     <input v-model="state.code" placeholder="Enter 6-digit code" type="text" class="input-field" />
                     <button @click="verifyCode" class="submit-button">Verify</button>
+                    <button @click="resendCode" class="resend-button">Resend Code</button>
                     <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
                     <p v-if="successMessage" class="success">{{ successMessage }}</p>
+                    <p v-if="resendMessage" class="info">{{ resendMessage }}</p>
                 </div>
+
             </div>
         </div>
     </main>
@@ -83,6 +94,7 @@ const selectedMethod = ref('');
 const errorMessage = ref('');
 const successMessage = ref('');
 const router = useRouter();
+const resendMessage = ref('');
 
 const login = async () => {
     try {
@@ -134,6 +146,31 @@ const sendVerificationCode = async () => {
         setTimeout(() => {
             
         }, 1000);
+    }
+};
+
+const resendCode = async () => {
+    try {
+        // Logic to resend the 2FA code
+        resendMessage.value = '';
+        errorMessage.value = '';
+
+        // Simulate API call for resending code
+        const params = {
+            email: state.email,
+            phone_number: state.phone,
+            method: selectedMethod.value,
+        }
+        
+        isCodeSent.value = true;
+        errorMessage.value = '';
+        const response = await authService.sendVerification(params);
+        
+        setTimeout(() => {
+            resendMessage.value = 'A new code has been sent to your email/phone.';
+        }, 1000);
+    } catch (error) {
+        toast.error(`${error}`)
     }
 };
 
