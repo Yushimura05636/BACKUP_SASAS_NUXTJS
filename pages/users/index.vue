@@ -121,7 +121,7 @@
       try {
         UserService.usr_id = parseInt(selectedUserId.value);
         await apiService.authUserUpdate({});
-        navigateTo(`/users/update/${selectedUserId.value}`);
+        navigateTo(`/users/update`);
       } catch (error) {
         toast.error(`${error}`, { autoClose: 5000 });
       }
