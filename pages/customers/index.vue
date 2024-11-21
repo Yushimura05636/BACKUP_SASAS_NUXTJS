@@ -1,20 +1,17 @@
 <template>
   <NuxtLayout name="admin">
     <div class="p-6 max-w-screen-lg mx-auto bg-white shadow-lg rounded-lg">
-      <!-- Header -->
-      <div class="text-2xl font-bold mb-4 text-gray-800">Customers</div>
-
       <!-- Action Bar -->
       <div class="flex flex-col md:flex-row justify-between items-center mb-6 space-y-4 md:space-y-0">
         <!-- Buttons on the left -->
         <div class="flex space-x-2 justify-center md:justify-start">
-          <FormButton buttonStyle="black" @click="createItem">
+          <FormButton buttonStyle="black" class="button" @click="createItem">
             Create
           </FormButton>
-          <FormButton buttonStyle="green" @click="viewSelected" :disabled="!selectedId">
+          <FormButton buttonStyle="green" class="button" @click="viewSelected" :disabled="!selectedId">
             View
           </FormButton>
-          <FormButton buttonStyle="yellow" @click="updateSelected" :disabled="!selectedId">
+          <FormButton buttonStyle="yellow" class="button" @click="updateSelected" :disabled="!selectedId">
             Update
           </FormButton>
         </div>
@@ -216,5 +213,61 @@ td {
 
 button:disabled {
   cursor: not-allowed;
+}
+
+.button {
+    position: relative;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+    padding-block: 0.5rem;
+    padding-inline: 1.25rem;
+    background-color: #116f6f; /* Tailwind color teal-800 */
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #fff;
+    gap: 10px;
+    font-weight: bold;
+    border: 3px solid #ffffff4d;
+    outline: none;
+    overflow: hidden;
+    font-size: 15px;
+  }
+  
+  .icon {
+    width: 24px;
+    height: 24px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .button:hover {
+    transform: scale(1.05);
+    border-color: #fff9;
+  }
+  
+  .button:hover .icon {
+    transform: translate(4px);
+  }
+  
+  .button:hover::before {
+    animation: shine 1.5s ease-out infinite;
+  }
+  
+.button::before {
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 100%;
+    background-image: linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0) 30%,
+      rgba(255, 255, 255, 0.8),
+      rgba(255, 255, 255, 0) 70%
+    );
+    top: 0;
+    left: -100px;
+    opacity: 0.6;
 }
 </style>

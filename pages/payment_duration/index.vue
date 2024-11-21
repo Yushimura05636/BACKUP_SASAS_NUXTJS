@@ -9,20 +9,20 @@
             <!-- Left: Action Buttons -->
             <div class="flex space-x-4 justify-center md:justify-start">
               <button
-                class="px-4 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600 transition"
+                class="px-4 py-2 text-white button rounded-lg hover:bg-green-600 transition"
                 @click="createPaymentFrequency"
               >
                 Create
               </button>
               <button
-                class="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition"
+                class="px-4 py-2 text-white button rounded-lg hover:bg-blue-600 transition"
                 v-if="selectedDurationID"
                 @click="updateDuration"
               >
                 Modify
               </button>
               <button
-                class="px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600 transition"
+                class="px-4 py-2 text-white button rounded-lg hover:bg-red-600 transition"
                 v-if="selectedDurationID"
               >
                 Delete
@@ -37,7 +37,7 @@
                 v-model="state.searchQuery"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
               />
-              <button class="px-4 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-700">
+              <button class="px-4 py-2 text-white button rounded-lg hover:bg-indigo-700">
                 Search
               </button>
             </div>
@@ -189,11 +189,60 @@ import { PageNameService } from '~/models/PageName';
     border-bottom: 1px solid #e2e8f0;
   }
 
-  button {
-    transition: background-color 0.2s ease, box-shadow 0.2s ease;
-  }
+  .button {
+  position: relative;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  padding-block: 0.5rem;
+  padding-inline: 1.25rem;
+  background-color: #116f6f; /* Tailwind color teal-800 */
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+  gap: 10px;
+  font-weight: bold;
+  border: 3px solid #ffffff4d;
+  outline: none;
+  overflow: hidden;
+  font-size: 15px;
+}
 
-  button:hover {
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  }
+.icon {
+  width: 24px;
+  height: 24px;
+  transition: all 0.3s ease-in-out;
+}
+
+.button:hover {
+  transform: scale(1.05);
+  border-color: #fff9;
+}
+
+.button:hover .icon {
+  transform: translate(4px);
+}
+
+.button:hover::before {
+  animation: shine 1.5s ease-out infinite;
+}
+
+.button::before {
+  content: "";
+  position: absolute;
+  width: 100px;
+  height: 100%;
+  background-image: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 30%,
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0) 70%
+  );
+  top: 0;
+  left: -100px;
+  opacity: 0.6;
+}
+
   </style>
