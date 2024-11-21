@@ -444,7 +444,7 @@ const menuItems = ref([
   icon: UserPlusIcon,
   subLinks: [
     { name: "Customers", href: "/customers", icon: UsersIcon },
-    { name: "Groups", href: "/libraries", icon: UsersIcon },
+    { name: "Groups", href: "/customers/group/", icon: UsersIcon },
   ],
 },
 {
