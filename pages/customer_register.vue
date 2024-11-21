@@ -36,32 +36,33 @@
                             <input v-model="personality.email_address" type="email" id="email" placeholder="email@example.com" class="input-field" @input="resetCode"/>
                             <span v-if="validationErrors.email_address" class="error-text">{{ validationErrors.email_address }}</span>
                         </div>
-                        <button @click="sendVerificationCode" type="button" class="button-primary">
-                            <img 
-                            src="https://cdn-icons-png.flaticon.com/512/876/876777.png" 
-                            alt="Send Icon" 
+                        <button @click="sendVerificationCode" type="button" class="button button-primary">
+                            <img
+                            src="https://cdn-icons-png.flaticon.com/512/876/876777.png"
+                            alt="Send Icon"
                             class="w-5 h-5 mr-2"
                         />
+                        Verify
                         </button>
                     </div>
 
                     <div v-if="verificationCodeSent" class="flex items-center gap-4">
                         <div class="flex-1">
                             <label for="verificationCode" class="block text-sm font-medium text-gray-600">Verification Code</label>
-                            <input 
-                                v-model="verificationCode" 
-                                type="text" 
-                                id="verificationCode" 
-                                placeholder="Enter the code" 
-                                :disabled="isCodeVerified" 
-                                class="input-field" 
+                            <input
+                                v-model="verificationCode"
+                                type="text"
+                                id="verificationCode"
+                                placeholder="Enter the code"
+                                :disabled="isCodeVerified"
+                                class="input-field"
                             />
                             <span v-if="validationErrors.verificationCode" class="error-text">{{ validationErrors.verificationCode }}</span>
                         </div>
-                        <button @click="verifyCode" type="button" class="button-success" :disabled="isCodeVerified">
-                            <img 
-                            src="https://cdn-icons-png.flaticon.com/512/876/876777.png" 
-                            alt="Send Icon" 
+                        <button @click="verifyCode" type="button" class="button button-success" :disabled="isCodeVerified">
+                            <img
+                            src="https://cdn-icons-png.flaticon.com/512/876/876777.png"
+                            alt="Send Icon"
                             class="w-5 h-5 mr-2"
                         />
                         </button>
@@ -174,12 +175,12 @@
                         <label for="passbookNo" class="block text-sm font-medium text-gray-600">Passbook No.</label>
                         <input v-model="customer.passbook_no" type="number" id="passbookNo"  class="w-full border rounded-lg px-4 py-2"  disabled  />
                         <span v-if="validationErrorsForCustomer.passbook_no" class="text-red-500 text-sm">{{ validationErrorsForCustomer.passbook_no }}</span>
-                    </div> 
+                    </div>
 
-                    <!-- <div>
+                    <div>
                         <label for="notes" class="block text-sm font-medium text-gray-600">Notes</label>
                         <textarea v-model="personality.notes" id="notes" class="input-field" placeholder="Enter any additional notes..."></textarea>
-                    </div> -->
+                    </div>
                 </div>
             </div>
 
@@ -210,11 +211,14 @@
                     </tbody>
                 </table>
             </div>
-             
-            <div class="flex justify-end gap-4">
-                <button type="submit" class="button-primary">Register</button>
-                <button type="button" class="button-cancel" @click="cancelForm">Cancel</button>
-            </div>
+
+            <div class="flex justify-between items-center">
+        <button type="submit" class="button button-primary">
+          <UserPlusIcon class="w-5 h-5 mr-2" />
+          Register
+        </button>
+        <button type="button" class="button button-cancel" @click="cancelForm">Cancel</button>
+      </div>
         </form>
     </div>
 </template>
