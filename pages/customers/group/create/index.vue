@@ -31,6 +31,7 @@
         <div class="flex justify-between">
         <button
             type="button"
+            @click="handleCancel()"
             class="px-6 py-3 bg-gray-300 text-gray-700 rounded-lg shadow hover:bg-gray-400 transition">
             Cancel
         </button>
@@ -53,7 +54,10 @@ import 'vue3-toastify/dist/index.css';
 import { ref, onMounted } from 'vue';
 import { apiService } from '~/routes/api/API';
 
-
+function handleCancel()
+{
+    navigateTo(`/customers/group`)
+}
 
 const fetchCollectors = async () => {
 // Replace with your actual API call
