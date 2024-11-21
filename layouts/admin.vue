@@ -214,7 +214,7 @@
     <div class="flex h-16 items-center justify-between bg-teal-850 shadow-md px-4 rounded-t-lg">
 <img
   class="h-12 w-12 rounded-full object-cover"
-  src="../img/logo with bg.png"
+  src="../img/LendCash_Logo-removebg-preview.png with bg.png"
   :alt="name.company"
 />
 <h1 class="text-lg font-bold text-white">{{ name.company }}</h1>
