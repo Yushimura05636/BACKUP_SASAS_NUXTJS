@@ -469,7 +469,7 @@ function isValidAge(birthday) {
     return age > 18 || (age === 18 && monthDiff >= 0);
 }
 function isValidPhilippineNumber(phone) {
-    const mobileRegex = /^09\d{9}$/; // 12 digits
+    const mobileRegex = /^09\d{10}$/; // 12 digits
     const landlineRegex = /^0\d{7,9}$/; // 7-9 digits
     return mobileRegex.test(phone) || landlineRegex.test(phone);
 }
