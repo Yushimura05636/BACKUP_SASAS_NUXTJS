@@ -753,6 +753,17 @@ class API extends BaseAPIService {
             return await this.request(`/DISBURSEMENT`, 'GET', params)
         }
 
+        async getCollectorAndGroupID(params: object): Promise<any> {
+            return await this.request(`/GET_COLLECTORandGROUP_ID`, 'GET', params)
+        }
+
+        async getLoansToCollect(params: object): Promise<any> {
+            return await this.request(`/FETCH_LOANS`, 'POST', params);
+        }
+        async getLoansCollected(params: object): Promise<any> {
+            return await this.request(`/FETCH_COLLECTED_LOANS`, 'POST', params);
+        }
+
 
 //authentioncation
 // User Authentication 1

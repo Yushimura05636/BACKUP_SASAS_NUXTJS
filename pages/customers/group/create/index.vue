@@ -9,7 +9,6 @@
             <input v-model="customer_group.description" type="text" class="w-full border rounded-lg px-4 py-2"  />
         </div>
 
-
         <div>
             <label for="collectorSelect" class="block text-sm font-medium text-gray-700 mb-2">
                 Collector's Name
