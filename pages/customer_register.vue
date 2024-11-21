@@ -175,6 +175,11 @@
                         <input v-model="customer.passbook_no" type="number" id="passbookNo"  class="w-full border rounded-lg px-4 py-2"  disabled  />
                         <span v-if="validationErrorsForCustomer.passbook_no" class="text-red-500 text-sm">{{ validationErrorsForCustomer.passbook_no }}</span>
                     </div> 
+
+                    <!-- <div>
+                        <label for="notes" class="block text-sm font-medium text-gray-600">Notes</label>
+                        <textarea v-model="personality.notes" id="notes" class="input-field" placeholder="Enter any additional notes..."></textarea>
+                    </div> -->
                 </div>
             </div>
 
