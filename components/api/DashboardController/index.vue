@@ -38,7 +38,7 @@ async function getCustomerDetails() {
         else
         {
           loading.value = false
-          navigateTo('/')
+          navigateTo('/dashboard/EMPLOYEE')
         }
     } catch (error) {
         console.error(`Error fetching user details: ${error}`);
