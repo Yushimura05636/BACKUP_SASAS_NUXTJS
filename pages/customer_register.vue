@@ -184,34 +184,6 @@
                 </div>
             </div>
 
-            <!-- Fees table -->
-            <h3 class="text-gray-700 font-bold my-4">Fees</h3>
-            <div v-if="state.fees && state.fees.length > 0" class="overflow-auto max-h-[250px]">
-                <table class="min-w-full bg-white border border-gray-300 mb-4">
-                    <thead>
-                        <tr>
-                            <!-- <th class="px-4 py-2 border text-left">Select</th> -->
-                            <th class="px-4 py-2 border text-left">Fee Description</th>
-                            <th class="px-4 py-2 border text-left">Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="fee in state.fees" :key="fee.id">
-                            <!-- <td class="px-4 py-2 border text-left">
-                            <input
-                            type="checkbox"
-                            :value="fee.id"
-                            :checked="customerData.selectedFees.includes(fee.id)"
-                            @change="updateSelectedFees(fee, $event.target.checked)"
-                            />
-                            </td> -->
-                            <td class="px-4 py-2 border">{{ fee.description }}</td>
-                            <td class="px-4 py-2 border">{{ fee.amount }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
             <div class="flex justify-between items-center">
         <button type="submit" class="button button-primary">
           <UserPlusIcon class="w-5 h-5 mr-2" />
@@ -326,7 +298,7 @@ isTableLoading: false,
         const response = await apiService.getFeeActiveNoAuthForReg({});
         // Simulating an API call with hardcoded data
         // Filter the data to include only 'Transaction Fee'
-        state.value.fees = response.data.filter(fee => fee.description === 'Transaction Fees' || fee.description == 'Transaction Fee');
+        state.value.fees = response.data.filter(fee => fee.description === 'Membership Fees' || fee.description == 'Membership Fee');
 
         if(state.value.fees.length > 0 || state.value.fees != null)
         {
