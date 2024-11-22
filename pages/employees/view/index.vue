@@ -94,11 +94,10 @@
         <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500">
           Approve
         </button>
-        <!-- <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-500 ml-2">
-          Reject
-        </button> -->
+        <button type="button" @click="handleCancel()" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-500 ml-2">
+          Cancel
+        </button>
       </div>
-
     </form>
   </div>
 </NuxtLayout>
@@ -154,6 +153,11 @@ const employee = ref({
 
 // Civil Status Options for Combobox
 const civilStatuses = ref([]);
+
+function handleCancel()
+{
+  navigateTo('/employees')
+}
 
 // Fetch employee data
 async function fetchEmployeeData() {

@@ -95,11 +95,11 @@
         <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500">
           Update
         </button>
+        <button @click="cancelHandler()" type="button" class="mx-5 px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-blue-500">
+          Cancel
+        </button>
       </div>
     </form>
-    <button @click="cancelHandler()" type="submit" class="mx-5 px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-blue-500">
-      Cancel
-    </button>
   </div>
 </NuxtLayout>
 </template>

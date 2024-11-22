@@ -138,9 +138,17 @@
         </div>
       </div>
 
-      <div class="mt-4">
-        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500">
+      <div class="flex space-x-4">
+        <button 
+          type="submit" 
+          class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500">
           Create Employee
+        </button>
+        <button 
+          type="button" 
+          class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-500" 
+          @click="handleCancel()">
+          Cancel
         </button>
       </div>
     </form>
@@ -209,6 +217,11 @@ const roles = ref([
   { value: 'employee.supervisor', label: 'Supervisor' },
   { value: 'employee.cashier', label: 'Cashier' },
 ]);
+
+function handleCancel()
+{
+  navigateTo('/employees')
+}
 
 const handleRoleChange = () => {
   console.log(`Selected Role: ${employee.value.role}`);
