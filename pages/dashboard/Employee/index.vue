@@ -30,7 +30,7 @@
                   </div>
                   <div class="flex items-center justify-between">
                     <p class="text-lg font-semibold text-gray-700">Total Groups</p>
-                    <a href="/libraries/" class="text-blue-500 font-semibold">View all Groups &gt;</a>
+                    <a href="/customers/group/" class="text-blue-500 font-semibold">View all Groups &gt;</a>
                   </div>
                 </div>
               </div>
