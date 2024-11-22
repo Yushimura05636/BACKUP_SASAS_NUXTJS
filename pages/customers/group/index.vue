@@ -110,7 +110,6 @@ onMounted(async () => {
 const fetchGroups = async () => {
   try {
     const response = await apiService.getGroupViewData({});
-    response[0].id
     debugger
     groups.value = response.map((group: any) => ({
       id: group.id,
