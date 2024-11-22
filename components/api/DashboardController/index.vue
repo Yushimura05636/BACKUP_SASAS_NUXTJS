@@ -25,21 +25,12 @@ async function getCustomerDetails() {
             loading.value = false
             navigateTo('/dashboard/Client')
         }
-        else if(user.value == 'EMPLOYEE')
-        {
-            loading.value = false
-            navigateTo('/dashboard/Employee')
-        }
-        else if(user.value == 'COLLECTOR')
-        {
-          loading.value = false
-          navigateTo('/dashboard/COLLECTOR')
-        }
         else
         {
           loading.value = false
           navigateTo('/dashboard/EMPLOYEE')
         }
+        
     } catch (error) {
         console.error(`Error fetching user details: ${error}`);
     } finally {
