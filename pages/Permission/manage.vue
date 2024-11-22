@@ -300,7 +300,8 @@ state.document.forEach((document) => {
     { documentId: document.id, permission: 'view' },
     { documentId: document.id, permission: 'create' },
     { documentId: document.id, permission: 'update' },
-    { documentId: document.id, permission: 'approve' },
+    { documentId: document.id, permission: 'delete' },
+    { documentId: document.id, permission: 'approved' },
     { documentId: document.id, permission: 'reject' },
   );
 });
