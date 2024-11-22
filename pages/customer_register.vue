@@ -543,7 +543,7 @@ const createCustomer = async () => {
         }
 
         // Validate phone numbers
-        if (!isValidPhilippineNumber(personality.value.cellphone_no) || !isValidPhilippineNumber(personality.value.telephone_no)) {
+        if (!isValidPhilippineNumber(personality.value.cellphone_no)) {
             toast.error("Please enter a valid Philippine-based phone number.");
             return;
         }
