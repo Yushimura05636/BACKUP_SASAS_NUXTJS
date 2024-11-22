@@ -2,6 +2,7 @@ export class Users {
   private _usr_id!: number;
   private static _lgUsr_id?: number;
   private _usbl_id?: number | undefined;
+  private _edit_usr_id!: number;
   private _status_id!: number;
   private _last_name!: string;
   private _first_name!: string;
@@ -10,6 +11,12 @@ export class Users {
   private _email!: string;
   private _employee_id!: number;
   
+  public get edit_usr_id(): number {
+    return this._edit_usr_id;
+  }
+  public set edit_usr_id(value: number) {
+    this._edit_usr_id = value;
+  }
   public get usbl_id(): number | undefined {
     return this._usbl_id;
   }

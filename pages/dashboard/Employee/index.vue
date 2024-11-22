@@ -74,11 +74,11 @@
               </div>
             </div>
 
-            <!-- Payment Schedules Line Chart -->
+            <!-- Payment Schedules Line Chart
             <div v-if="payments.length > 0" class="bg-white shadow-md rounded-lg p-6 border border-gray-200">
               <p class="text-lg font-semibold text-gray-700 mb-4">Payment Schedules</p>
               <PaymentSchedulesChart/>
-            </div>
+            </div> -->
 
           </div>
         </main>

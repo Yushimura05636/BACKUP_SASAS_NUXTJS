@@ -196,7 +196,7 @@
         </div>
 
         <!-- Requirements table -->
-        <div class="mt-4 mb-4">
+        <div class="mt-4 mb-4 overflow-auto max-h-[300px]">
             <h3 class="text-gray-700 font-bold my-4">Requirements</h3>
         <table class="min-w-full table-auto">
             <thead>
@@ -236,8 +236,9 @@
                   {{ requirementsPrompt }}
               </span> -->
         </table>
+      </div>
 
-        <div class="mb-4 mt-4">
+    <div class="mb-4 mt-4 overflow-auto max-h-[200px]">
 
             <!-- Fees table -->
   <h3 class="text-gray-700 font-bold my-4">Fees</h3>
@@ -266,20 +267,7 @@
       </tbody>
     </table>
   </div>
-
-  <div class="mb-4">
-    <label class="block text-gray-700">Total Fees</label>
-    <input
-      v-model="totalFees"
-      step="0.01"
-      type="number"
-      class="w-full border border-gray-300 rounded p-2"
-      readonly
-    />
-  </div>
 </div>
-
-    </div>
 
     <div class="mt-4 flex justify-end space-x-4">
   <button type="button" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-200" @click="handleCancel">
@@ -560,7 +548,6 @@ const validationErrors = ref({
       first_name: '',
       family_name: '',
       middle_name: '',
-      email_address: '',
       birthday: '',
       gender_code: '',
       civil_status: '',
@@ -585,7 +572,6 @@ const validationErrorsForCustomer = ref({
       group_id: '',
       passbook_no: '',
       loan_count_id: '',
-      password: '',
     });
 
     const requirementsPrompt = ref('');
@@ -627,8 +613,13 @@ const createCustomer = async () => {
     }
 
     // Validate phone numbers
-    if (!isValidPhilippineNumber(personality.value.cellphone_no) || !isValidPhilippineNumber(personality.value.telephone_no)) {
-        toast.error("Please enter a valid Philippine-based phone number.");
+    if (!isValidPhilippineNumber(personality.value.cellphone_no)) {
+        toast.error("Please enter a valid Philippine-based cellphone phone number.");
+        return;
+    }
+
+    if (personality.value.telephone_no.length > 0 && !isValidPhilippineNumber(personality.value.telephone_no)) {
+      toast.error("Please enter a valid Philippine-based telephone phone number.");
         return;
     }
 
@@ -636,7 +627,6 @@ const createCustomer = async () => {
         if (!personality.value.first_name  ||
         !personality.value.family_name  ||
         !personality.value.middle_name  ||
-        !personality.value.email_address||
         !personality.value.birthday     ||
         !personality.value.gender_code  ||
         !personality.value.civil_status ||
@@ -659,23 +649,26 @@ const createCustomer = async () => {
         return;
       }
 
-      if (requirementsPrompt.value) {
-        toast.info(requirementsPrompt.value);
-        return;
-      }
+      // if (requirementsPrompt.value) {
+      //   toast.info(requirementsPrompt.value);
+      //   return;
+      // }
+      
 
-
-      if (selectedRequirements.value.length < 2) {
-      toast.error("Please select at least two document requirement.");
+      if (selectedRequirements.value.length < 5) {
+      toast.error("Please select at least five document requirement.");
       requirementsPrompt.value = `Select atleast one requirement before proceeding.`;
       return;
       }
 
       console.log("Password value:", customer.value.password);
-      if (!customer.value.password || customer.value.password.trim() === '') {
-        validationErrorsForCustomer.value.password = 'Password is required.';
-        toast.error('Password is required.');
-        return;
+      if(personality.value.email_address)
+      {
+        if (!customer.value.password || customer.value.password.trim() === '') {
+          validationErrorsForCustomer.value.password = 'Password is required.';
+          toast.error('Password is required.');
+          return;
+      }
     }
 
       debugger
@@ -775,6 +768,7 @@ async function fetchNotExpiredCustomerRequirementsNoAUTH() {
     }
 
     console.log(selectedDetails); // Output selected details to console
+    console.log(selectedRequirements.value); // Output selected details to console
 };
 
 

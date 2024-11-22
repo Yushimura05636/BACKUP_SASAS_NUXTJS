@@ -151,7 +151,7 @@
           </div>
 
           <!-- Select Requirements Table -->
-          <div class="mt-4">
+          <div class="mt-4 overflow-auto max-h-[300px]">
             <h3 class="text-gray-800 text-lg font-bold mb-2">Select Requirements</h3>
             <table class="min-w-full table-auto">
               <thead>
@@ -437,18 +437,18 @@ Object.assign(personality.value, response.personality) // Merge response data in
 
    // Watching selectedRequirements for changes
 watch(selectedRequirements, (newSelected) => {
-    // Check for expiry dates in selected requirements
-    const hasMissingExpiryDate = newSelected.some(requirementId => {
-        const requirement = requirements.value.find(req => req.id === requirementId);
-        return requirement && !requirement.expiry_date;
-    });
+    // // Check for expiry dates in selected requirements
+    // const hasMissingExpiryDate = newSelected.some(requirementId => {
+    //     const requirement = requirements.value.find(req => req.id === requirementId);
+    //     return requirement && !requirement.expiry_date;
+    // });
 
-    if (hasMissingExpiryDate) {
-        toast.info("Please select an expiry date for each selected requirement.");
-        requirementsPrompt.value = "Input expiry date for all selected requirements before proceeding.";
-    } else {
-        requirementsPrompt.value = ""; // Clear prompt if all dates are filled
-    }
+    // if (hasMissingExpiryDate) {
+    //     toast.info("Please select an expiry date for each selected requirement.");
+    //     requirementsPrompt.value = "Input expiry date for all selected requirements before proceeding.";
+    // } else {
+    //     requirementsPrompt.value = ""; // Clear prompt if all dates are filled
+    // }
 });
 
 const requirementsPrompt = ref('');
@@ -483,9 +483,9 @@ const updateCustomerReject = async (action: 'Rejected') => {
 const updateCustomerApprove = async (action: 'Approved') => {
 try {
 
-    if (selectedRequirements.value.length < 2) {
-        toast.error("Please select at least two document requirement.");
-        requirementsPrompt.value = `Select atleast one requirement before proceeding.`;
+    if (selectedRequirements.value.length < 5) {
+        toast.error("Please select at least 5 document requirement.");
+        requirementsPrompt.value = `Select atleast 5 requirement before proceeding.`;
         return;
     }
 
@@ -557,7 +557,7 @@ async function fetchActiveRequirements() {
     finally{
         setTimeout(() => {
             fetchCustomerRequirement()
-        }, 1000);
+        }, 2000);
     }
 }
 
@@ -598,31 +598,31 @@ const getSelectedRequirements = () => {
 // Fetch customer requirements and update expiry dates in requirements
 const fetchCustomerRequirement = async () => {
 try {
-    const response = await apiService.getNotExpiredCustomerRequirementByIdNoAUTH({}, CustomersService.id); // Replace with your endpoint
-    const customerRequirements = response.data;
+      const response = await apiService.getNotExpiredCustomerRequirementByIdNoAUTH({}, CustomersService.id); // Replace with your endpoint
+      const customerRequirements = response.data;
 
-    debugger
+      debugger
 
-    for (let i = 0; i < requirements.value.length; i++) {
-    const req = requirements.value[i];
-    for (let j = 0; j < customerRequirements.length; j++) {
-        const custReq = customerRequirements[j];
-        if(!(custReq.expiry_date == null) || !(custReq.expiry_date == undefined))
-        {
-            if (req.id === custReq.id) {
-            selectedRequirements.value.push(req.id);
-            req.expiry_date = custReq.expiry_date.split(" ")[0]; // Format date
-            break;
-            }
-        }
-        else
-        {
-            if (req.id === custReq.id) {
-            selectedRequirements.value.push(req.id);
-            break;
-            }
-        }
-    }
+      for (let i = 0; i < requirements.value.length; i++) {
+      const req = requirements.value[i];
+      for (let j = 0; j < customerRequirements.length; j++) {
+          const custReq = customerRequirements[j];
+          if(!(custReq.expiry_date == null) || !(custReq.expiry_date == undefined))
+          {
+              if (req.id === custReq.id) {
+              selectedRequirements.value.push(req.id);
+              req.expiry_date = custReq.expiry_date.split(" ")[0]; // Format date
+              break;
+              }
+          }
+          else
+          {
+              if (req.id === custReq.id) {
+              selectedRequirements.value.push(req.id);
+              break;
+              }
+          }
+      }
     }
 
     // state.value.requirements = [];

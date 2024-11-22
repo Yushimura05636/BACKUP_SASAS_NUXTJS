@@ -23,7 +23,7 @@
 
           <div>
             <label for="email" class="block text-gray-700">Email</label>
-            <input v-model="personality.email_address" type="email" id="email" class="w-full border rounded-lg px-4 py-2" required />
+            <input v-model="personality.email_address" type="email" id="email" class="w-full border rounded-lg px-4 py-2" />
           </div>
 
           <div>
@@ -182,7 +182,7 @@
 
         <!-- Select Requirements Table -->
         <!-- Select Requirements Table -->
-      <div class="mt-4">
+      <div class="mt-4 overflow-auto max-h-[300px]">
         <h3 class="text-gray-800 text-lg font-bold mb-2">Select Requirements</h3>
         <table class="min-w-full table-auto">
           <thead>
@@ -201,7 +201,6 @@
                     :value="requirement.id"
                     v-model="selectedRequirements"
                     @change="getSelectedRequirements"
-                    :disabled="!requirement.expiry_date"
                     class="form-checkbox h-5 w-5 text-green-600"
                   />
                 </label>
@@ -404,7 +403,6 @@ const validationErrors = ref({
       first_name: '',
       family_name: '',
       middle_name: '',
-      email_address: '',
       birthday: '',
       gender_code: '',
       civil_status: '',
@@ -498,12 +496,12 @@ watch(selectedRequirements, (newSelected) => {
         return requirement && !requirement.expiry_date;
     });
 
-    if (hasMissingExpiryDate) {
-        toast.info("Please select an expiry date for each selected requirement.");
-        requirementsPrompt.value = "Input expiry date for all selected requirements before proceeding.";
-    } else {
-        requirementsPrompt.value = ""; // Clear prompt if all dates are filled
-    }
+    // if (hasMissingExpiryDate) {
+    //     toast.info("Please select an expiry date for each selected requirement.");
+    //     requirementsPrompt.value = "Input expiry date for all selected requirements before proceeding.";
+    // } else {
+    //     requirementsPrompt.value = ""; // Clear prompt if all dates are filled
+    // }
 });
 
 
@@ -543,7 +541,6 @@ const updateCustomer = async () => {
         if (!personality.value.first_name  ||
         !personality.value.family_name  ||
         !personality.value.middle_name  ||
-        !personality.value.email_address||
         !personality.value.birthday     ||
         !personality.value.gender_code  ||
         !personality.value.civil_status ||
@@ -679,19 +676,29 @@ const getSelectedRequirements = () => {
 const fetchCustomerRequirement = async () => {
   try {
     const response = await apiService.getNotExpiredCustomerRequirementByIdNoAUTH({}, CustomersService.id); // Replace with your endpoint
+    debugger;
     const customerRequirements = response.data;
 
-    debugger;
 
     for (let i = 0; i < requirements.value.length; i++) {
       const req = requirements.value[i];
       for (let j = 0; j < customerRequirements.length; j++) {
         const custReq = customerRequirements[j];
-        if (req.id === custReq.id) {
-          selectedRequirements.value.push(req.id);
-          req.expiry_date = custReq.expiry_date.split(" ")[0]; // Format date
-          break;
-        }
+        if(!(custReq.expiry_date == null) || !(custReq.expiry_date == undefined))
+          {
+              if (req.id === custReq.id) {
+              selectedRequirements.value.push(req.id);
+              req.expiry_date = custReq.expiry_date.split(" ")[0]; // Format date
+              break;
+              }
+          }
+          else
+          {
+              if (req.id === custReq.id) {
+              selectedRequirements.value.push(req.id);
+              break;
+              }
+          }
       }
     }
 
@@ -718,18 +725,22 @@ setTimeout(() => {
 }
 
 const formatDate = (dateString) => {
-  console.log("Input Date String:", dateString); // Add this line for debugging
-  const parts = dateString.split('-');
-  debugger;
-  if (parts.length === 3) {
-    const month = parts[1].padStart(2, '0');
-    const day = parts[2].padStart(2, '0');
-    const year = parts[0];
-    return `${year}-${month}-${day}`;
-  } else {
-    console.error("Invalid date format. Expected MM/DD/YYYY.");
-    return null;
-  }
+  if(!(dateString == null) || !(dateString == undefined))
+{
+    console.log("Input Date String:", dateString); // Add this line for debugging
+    const parts = dateString.split('-');
+    // debugger;
+    if (parts.length === 3) {
+        const month = parts[1].padStart(2, '0');
+        const day = parts[2].padStart(2, '0');
+        const year = parts[0];
+        return `${year}-${month}-${day}`;
+    } else {
+        console.error("Invalid date format. Expected MM/DD/YYYY.");
+        return null;
+    }
+}
+return null
 };
 </script>
 

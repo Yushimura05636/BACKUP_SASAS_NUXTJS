@@ -118,7 +118,8 @@
   async function updateUser() {
     if (selectedUserId.value) {
       try {
-        UserService.usr_id = parseInt(selectedUserId.value);
+        debugger
+        UserService.edit_usr_id = parseInt(selectedUserId.value);
         await apiService.authUserUpdate({});
         navigateTo(`/users/update`);
       } catch (error) {

@@ -7,14 +7,14 @@
           <form @submit.prevent="submitForm">
             <!-- Employee ID Field as Combobox -->
             <div class="mb-4">
-              <label for="employee_id" class="block text-sm font-medium text-gray-700">Employees</label>
+              <label for="employee_id" class="block text-sm font-medium text-gray-700">Users</label>
               <select
                 v-model="form.employee_id"
                 id="employee_id"
                 class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 required
               >
-                <option value="" disabled>Select Employee</option>
+                <option value="" disabled>Select Users</option>
                 <option v-for="employee in employees" :key="employee.id" :value="employee.id">
                   {{ employee.first_name }} {{ employee.middle_name }} {{ employee.family_name }}
                 </option>
@@ -104,6 +104,20 @@
               />
             </div>
 
+            <!-- Family Name Field -->
+            <div class="mb-4">
+              <label for="family_name" class="block text-sm font-medium text-gray-700">User Type</label>
+              <input
+                disabled
+                v-model="form.type"
+                type="text"
+                id="family_name"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                placeholder="Enter Family Name"
+                required
+              />
+            </div>
+
             <!-- Status Field -->
             <div class="mb-4">
               <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
@@ -158,7 +172,7 @@ import 'vue3-toastify/dist/index.css';
   import { apiService } from '~/routes/api/API'; // Assuming you have this service
 
   // Employee list for the dropdown
-  const employees = ref<{ id: string; first_name: string; family_name: string; middle_name: string; email: string; cellphone_no: string; }[]>([]);
+  const employees = ref<{ id: string; first_name: string; family_name: string; middle_name: string; email: string; cellphone_no: string, type: string; }[]>([]);
 
   // Status list for the dropdown
   const statuses = ref<{ id: string; name: string }[]>([]);
@@ -170,7 +184,9 @@ import 'vue3-toastify/dist/index.css';
     middle_name: '',
     email: '',
     employee_id: '',
+    customer_id: '',
     cellphone_no: '',
+    type: '',
     password: '', // Added password field to the form state
     status: 0 // Added status field to the form state
   });
@@ -186,15 +202,21 @@ import 'vue3-toastify/dist/index.css';
 
       debugger;
 
-      // Directly assign response data to employees state
-      employees.value = response.data.map((entry: any) => ({
-        id: entry.employee.id,
-        first_name: entry.personality.first_name,
-        family_name: entry.personality.family_name,
-        middle_name: entry.personality.middle_name,
-        cellphone_no: entry.personality.cellphone_no,
-        email: entry.personality.email_address
-      }));
+      // Directly assign response data to employees state using a for loop
+      employees.value = [];
+
+      for (let i = 0; i < response.data.length; i++) {
+        const entry = response.data[i];
+        employees.value.push({
+          id: entry.entity.id,
+          first_name: entry.personality.first_name,
+          family_name: entry.personality.family_name,
+          middle_name: entry.personality.middle_name,
+          cellphone_no: entry.personality.cellphone_no,
+          email: entry.personality.email_address,
+          type: entry.entity.type,
+        });
+      }
 
       console.log(employees.value);
     } catch (error: any) {
@@ -252,6 +274,7 @@ import 'vue3-toastify/dist/index.css';
           form.value.middle_name = selectedEmployee.middle_name;
           form.value.email = selectedEmployee.email;
           form.value.cellphone_no = selectedEmployee.cellphone_no;
+          form.value.type = selectedEmployee.type;
         }
       }
     }
@@ -259,8 +282,21 @@ import 'vue3-toastify/dist/index.css';
 
   // Function to handle form submission
   const submitForm = async () => {
-    if (form.value.family_name && form.value.first_name && form.value.email && form.value.employee_id && form.value.password && form.value.status) {
+    debugger
+    if (form.value.family_name && form.value.first_name && form.value.employee_id, form.value.email && form.value.password && form.value.status && form.value.type) {
       try {
+        debugger
+
+        if(form.value.type == 'customer')
+        {
+          form.value.customer_id = form.value.employee_id
+          form.value.employee_id = '';
+        }
+        else
+        {
+          form.value.customer_id = '';
+        }
+
         // Send the form data to the API
         const response = await apiService.createUser({
           last_name: form.value.family_name,
@@ -268,26 +304,24 @@ import 'vue3-toastify/dist/index.css';
           middle_name: form.value.middle_name,
           email: form.value.email,
           employee_id: form.value.employee_id,
+          customer_id: form.value.customer_id,
           phone_number: form.value.cellphone_no,
           password: form.value.password, // Include password in the API request
           status_id: form.value.status, // Include status in the API request
         });
 
-        debugger
 
         // Handle successful response
-        if (response.success) {
-          toast.success("User created!", {
-          autoClose: 2000,
-          });
-          // Introduce a delay before navigating
-          setTimeout(() => {
-            navigateTo('/users');
-          }, 2000);
-          // successMessage.value = 'User created successfully!';
-          // Clear the form
-          //  cancel(); // Call the cancel function to reset the form
-        }
+        toast.success("User created!", {
+        autoClose: 2000,
+        });
+        // Introduce a delay before navigating
+        setTimeout(() => {
+          navigateTo('/users');
+        }, 2000);
+        // successMessage.value = 'User created successfully!';
+        // Clear the form
+        //  cancel(); // Call the cancel function to reset the form
       } catch (error: any) {
         console.error('Error creating user:', error);
         successMessage.value = 'Failed to create user. Please try again.';

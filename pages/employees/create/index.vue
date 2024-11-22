@@ -204,7 +204,8 @@ const employee = ref({
 
 const roles = ref([
   { value: 'employee.collector', label: 'Collector' },
-  { value: 'employee.loan_approval_manager', label: 'Loan Approval Manager' },
+  { value: 'employee.loan.approval.manager', label: 'Loan Approval Manager' },
+  { value: 'employee.membership.approval.manager', label: 'Membership Approval Manager' },
   { value: 'employee.supervisor', label: 'Supervisor' },
   { value: 'employee.cashier', label: 'Cashier' },
 ]);

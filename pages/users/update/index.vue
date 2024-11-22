@@ -144,7 +144,7 @@ import { UserService } from '~/models/User';
 import { apiService } from '~/routes/api/API'; // Assuming you have this service
 
 // Employee list for the dropdown
-const employees = ref<{ id: string; first_name: string; family_name: string; middle_name: string; email: string }[]>([]);
+const employees = ref<{ id: string; first_name: string; family_name: string; middle_name: string; email: string, type: string }[]>([]);
 
 // Status list for the dropdown
 const statuses = ref<{ id: string; name: string }[]>([]);
@@ -156,6 +156,7 @@ const form = ref({
   middle_name: '',
   email: '',
   employee_id: '',
+  type: '',
   password: '', // Added password field to the form state
   status: 0 // Added status field to the form state
 });
@@ -167,14 +168,19 @@ const successMessage = ref<string | null>(null);
 const fetchEmployees = async () => {
   try {
     // Fetch employee data from API
-    const response = await apiService.getUserById({}, UserService.usr_id);
+    const response = await apiService.getUserById({}, UserService.edit_usr_id);
+    const userEmail = ref('');
 
-    const userEmail = await apiService.getEmployeeById({}, response.data.employee_id);
+    // if(response.data.employee_id == null||response.data.employee_id <= 0)
+    // {
+
+    // }
+    // else{const userEmail = await apiService.getEmployeeById({}, response.data.employee_id)};
 
     form.value.first_name = response.data.first_name;
     form.value.family_name = response.data.last_name;
     form.value.middle_name = response.data.middle_name;
-    form.value.email = userEmail.personality.email_address;
+    form.value.email = response.data.email;
 
     // Directly assign response data to employees state
     // employees.value = response.data.map((entry: any) => ({
@@ -238,6 +244,7 @@ watch(
         form.value.family_name = selectedEmployee.family_name;
         form.value.middle_name = selectedEmployee.middle_name;
         form.value.email = selectedEmployee.email;
+        form.value.type = selectedEmployee.type;
       }
     }
   }
@@ -248,11 +255,13 @@ const submitForm = async () => {
     debugger;
   if (form.value.family_name && form.value.first_name && form.value.email && form.value.status) {
     try {
+      debugger
       // Send the form data to the API
       const response = await apiService.updateUser({
         password: form.value.password, // Include password in the API request
         status_id: form.value.status, // Include status in the API request
-      }, UserService.usr_id);
+        type: form.value.type,
+      }, UserService.edit_usr_id);
 
       // Handle successful response
       if (response.data) {
