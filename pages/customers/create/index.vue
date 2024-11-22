@@ -620,7 +620,13 @@ const createCustomer = async () => {
 
     if (personality.value.telephone_no.length > 0 && !isValidPhilippineNumber(personality.value.telephone_no)) {
       toast.error("Please enter a valid Philippine-based telephone phone number.");
-        return;
+      return;
+    }
+    
+    if(customerData.value.selectedFees.length <= 0)
+    {
+      toast.error("Please select atleast one fees to prceed");
+      return;
     }
 
         // // First Name validation

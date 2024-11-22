@@ -511,9 +511,9 @@ const updateCustomer = async () => {
         toast.info(requirementsPrompt.value);
         return;
       }
-    if (selectedRequirements.value.length < 2) {
-      toast.error("Please select at least two document requirement.");
-      requirementsPrompt.value = `Select atleast one requirement before proceeding.`;
+    if (selectedRequirements.value.length < 5) {
+      toast.error("Please select at least 5 document requirement.");
+      requirementsPrompt.value = `Select atleast 5 requirement before proceeding.`;
       return;
       }
 
@@ -535,6 +535,12 @@ const updateCustomer = async () => {
         if (!customer.value[field as keyof typeof customer.value]) {
           validationErrorsForCustomer.value[field as keyof typeof validationErrorsForCustomer.value] = `Please complete all required fields before proceeding.`;
         }
+      }
+
+      if(state.value.requirements.length <= 0)
+      {
+        toast.info("Please verify and select the requirements.");
+        return 
       }
 
        // // First Name validation
@@ -653,9 +659,7 @@ const getSelectedRequirements = () => {
             });
         }
     }
-
-
-
+    
     // Assuming selectedDataRequirements is an array
     state.value.requirements = []; // Reset the array first
 
