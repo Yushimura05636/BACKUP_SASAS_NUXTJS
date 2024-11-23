@@ -51,19 +51,16 @@
                             >
                             <template #body
                                 v-if="!(state.isTableLoading || (state.loanRelease?.data === 0))">
-                                <tr v-for="(release, index) in state.loanRelease?.data" :key="index" class=" px-4  py-2">
+                                <tr v-for="(release, index) in state.loanRelease" :key="index" class=" px-4  py-2">
 
-                                    <td class="py-2 border-b border-gray-300 ">
+                                    <!-- <td class="py-2 border-b border-gray-300 ">
                                         <input
                                         type="radio"
                                         :value="release.id"
                                         v-model="selectedLoanReleaseID"
                                         class="cursor-pointer"
                                         />
-                                    </td>
-                                    <td class="px-4  py-2 border-b border-gray-300  ">
-                                        <span>{{ release.id}} </span>
-                                    </td>
+                                    </td> -->
                                     <td class="px-4  py-2 border-b border-gray-300 ">
                                         <span>{{ release.datetime_prepared }}</span>
                                     </td>
@@ -71,10 +68,10 @@
                                         <span>{{ release.passbook_number}}</span>
                                     </td>
                                     <td class="px-4  py-2 border-b border-gray-300 ">
-                                        <span>{{ release.loan_application_id }}</span>
+                                        <span>{{ release.loan_application_no }}</span>
                                     </td>
                                     <td class="px-4  py-2 border-b border-gray-300 ">
-                                        <span>{{ release.prepared_by_id }}</span>
+                                        <span>{{ release.full_name }}</span>
                                     </td>
                                     <td class="px-4  py-2 border-b border-gray-300 ">
                                         <span>{{ release.datetime_first_due }}</span>
@@ -102,16 +99,12 @@ import 'vue3-toastify/dist/index.css';
 import { PermissionService } from '~/models/Permission';
 import { PageNameService } from '~/models/PageName';
 
-
-
     const state = reactive({
         columnHeaders: [
-            { name: '' },
-            { name: 'ID' },
             // { name: 'Date Time Created ' },
             { name: 'Date Time Prepared ' },
             { name: 'Passbook Number' },
-            { name: 'Loan Application ID ' },
+            { name: 'Loan Application NO ' },
             { name: 'Prepared by ' },
             { name: 'Date Time First Due ' },
             { name: 'Notes' },
@@ -135,6 +128,7 @@ import { PageNameService } from '~/models/PageName';
             const params = {}
             const response = await apiService.getLoanRelease(params)
             state.loanRelease = response
+            debugger
             console.log(state.loanRelease);
         } catch (error: any) {
             toast.error(error.message, {

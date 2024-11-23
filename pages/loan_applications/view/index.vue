@@ -176,34 +176,6 @@
                                 ></textarea>
                             </div>
 
-                            <div v-if="state.fees.length > 0" class="overflow-auto max-h-[250px]"> <!-- Limit height for fees table -->
-                                <div class="max-h-60 overflow-y-auto">
-                                    <table class="min-w-full bg-white border border-gray-300 mb-4">
-                                        <thead>
-                                            <tr>
-                                                <th class="px-4 py-2 border text-left">Fee Description</th>
-                                                <th class="px-4 py-2 border text-left">Amount</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr v-for="fee in state.fees" :key="fee.id">
-                                                <td class="px-4 py-2 border">{{ fee.description }}</td>
-                                                <td class="px-4 py-2 border">{{ fee.amount }}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <div class="mb-4">
-                                <label class="block text-gray-700">Total Fees</label>
-                                <input
-                                    v-model="customerData[selectedCheckCustomerId].totalFees"
-                                    step="0.01"
-                                    type="number"
-                                    class="w-full border border-gray-300 rounded p-2"/>
-                            </div>
-
                             <div class="text-center mt-4">
                                 <!-- Approve and Reject Buttons -->
                                 <button @click.prevent="approveTransaction" class="bg-green-500 text-white px-4 py-2 rounded">
